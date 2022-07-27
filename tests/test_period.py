@@ -35,7 +35,7 @@ def test_period_amount_checkoffs_change(period_obj):
 
 
 
-##### - amount_checkoffs test - #####
+##### - integration test      - #####
 @pytest.mark.parametrize("periods, start_date, end_date", [
     ("daily", datetime.date(2000, 1, 1), datetime.date(2000, 1, 2)), 
     ("weekly", datetime.date(2000, 1, 1), datetime.date(2000, 1, 8)),
