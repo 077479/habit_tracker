@@ -3,11 +3,7 @@ sys.path.append(str(pathlib.Path(__file__).parents[1]))
 
 import pytest, datetime
 from habtrack import habit
-
-############### - TODO outsource to conftest.py - ###############
-@pytest.fixture
-def habit_obj():
-    return habit.Habit("test_habit", "monthly", "just here to test the modul")
+from tests.conftest import habit_obj
 
 
 
@@ -44,7 +40,7 @@ def test_habit_str_repr(habit_obj):
 
 ############### - __eq__ test - ###############
 def test_habit_equality_true(habit_obj):
-    assert habit_obj == habit.Habit("test_habit", "monthly", "just here to test the modul")
+    assert habit_obj == habit.Habit(name="test_habit", periodicity="monthly", description="just here to test the modul")
 
 @pytest.mark.xfail
 @pytest.mark.parametrize("defect", [habit.Habit("test", "monthly"), 235, "nice", habit.Habit("john", "weekly")])

@@ -1,13 +1,10 @@
 import pathlib, sys, pytest, datetime
 sys.path.append(str(pathlib.Path(__file__).parents[1]))
+
 from habtrack import period
+from tests.conftest import period_obj
 
 
-##### - TODO outsource to "conftest.py" - #####
-@pytest.fixture
-def period_obj():
-    """returns a period object for test purposes"""
-    return period.Period("monthly")
 
 ##### - __init__ test         - #####
 @pytest.mark.parametrize("periodicity", ["daily", "weekly", "monthly"])

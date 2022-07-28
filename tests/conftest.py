@@ -1,10 +1,15 @@
-import pytest, datetime
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).parents[1]))
+
+import pytest
+from habtrack import habit, period
 
 @pytest.fixture
-def start_date():
-    """returns datetime.date(year=2000, month=1, day=1)"""
-    return datetime.date(2000,1,1)
+def period_obj():
+    """returns a period object for test purposes"""
+    return period.Period("monthly")
 
 @pytest.fixture
-def period():
-    """returns a period object for testpurposes"""
+def habit_obj():
+    """habit objec : name:test_habit, periodicity:monthly, desc:just here to test the modul checkoffs:[]"""
+    return habit.Habit(name="test_habit", periodicity="monthly", description="just here to test the modul")

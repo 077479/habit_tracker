@@ -31,8 +31,6 @@ class Habit:
     ----------
     _HABIT : bool
         helper constant for serialization purpose
-    group : str
-        for categorization
     name : name
         for human identification
     periodicity : period.Period
@@ -54,14 +52,16 @@ class Habit:
         helper method for test of serialization
     """
 
-    def __init__(self, name: str, periodicity: str, description: str = "") -> "Habit":
+    def __init__(self, name: str, periodicity: str, amount_checkoffs: int = 1, description: str = "") -> "Habit":
         """
         Parameters
         ----------
         name : str
             name for human identification
-        periodicity : period.Period
-            representaiton of the periodicity
+        periodicity : str
+            str representaiton of the periodicity
+        amount_checkoffs : int
+            represents the needed amounts of check_offs in order to not be broken
         description : str
             brief description of the represented habit
         
@@ -70,9 +70,9 @@ class Habit:
         """
 
         self._HABIT = True
-        self.group = None
         self.name = name
-        self.periodicity = period.Period(periodicity)
+        self.periodicity = period.Period(periodicity, amount_checkoffs)
+        self.amount_checkoffs = amount_checkoffs
         self.description = description
         self.creation_date = datetime.date.today()
         self.checkoffs = list()
@@ -99,14 +99,20 @@ class Habit:
         ---------
         other : Habit
             other habit object to determine equality
+        
+        Return
+        ------
+        bool
         """
+        
         equality_operations = [
-            self.group == other.group,
             self.name == other.name,
+            self.amount_checkoffs == other.amount_checkoffs,
             self.description == other.description,
             self.periodicity.periodicity == other.periodicity.periodicity,
             self.creation_date == other.creation_date,
             self.checkoffs == other.checkoffs]
+
         for element in equality_operations:
             if not element:
                 return False
