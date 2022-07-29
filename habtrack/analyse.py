@@ -1,7 +1,15 @@
+# ========== - package import access - ========== #
+import pathlib, sys
+sys.path.append(str(pathlib.Path(__file__).parent))
+
+
+# ========== - import - ========== #
 import datetime
 from typing import Iterable
 
-def get_streaks(hab : "Habit") -> list:
+
+# ========== - logic - ========== #
+def get_streaks(hab : "habit.Habit") -> list:
     """get_streaks: returns a list of lists with streaks
 
     the workflow is
@@ -35,13 +43,9 @@ def get_streaks(hab : "Habit") -> list:
         list of streaks represented by a list => [[streak1_date1, streak1_date2, ...], [streak2_date1, streak2_date2, ...], [...]]
     """
 
-    def _set_time_period(start: datetime.date) -> tuple:
-        """_set_time_period: helper function to set the time period"""
-        return hab.periodicity(start, 0), hab.periodicity(start, 1)
-
     checkoffs_copy = hab.checkoffs.copy()
-    list_streaks = [list()]
-    time_period = _set_time_period(hab.creation_date)
+    streaks = [list()]
+    time_period = hab.period(hab.creation_date)
 
     def _set_streak_lst() -> None:
         """_set_streak_lst: helper function to break down the complexiety"""
@@ -50,22 +54,22 @@ def get_streaks(hab : "Habit") -> list:
 
         for check in checkoffs_copy:
             if time_period[0] <= check < time_period[1]:
-                list_streaks[-1].append(check)
+                streaks[-1].append(check)
                 added_counter += 1
         
-        checkoffs_copy = [check for check in checkoffs_copy if check not in list_streaks[-1]]
+        checkoffs_copy = [check for check in checkoffs_copy if check not in streaks[-1]]
 
-        if not (added_counter >= hab.amount_checkoffs) \
+        if not (added_counter >= hab.amount) \
             and checkoffs_copy \
-            and list_streaks[-1]: list_streaks.append(list())
+            and streaks[-1]: streaks.append(list())
 
     while checkoffs_copy:
         _set_streak_lst()
-        time_period = _set_time_period(time_period[1])
+        time_period = hab.period(time_period[1])
 
-    return list_streaks
+    return streaks
 
-def get_longest_streak(hab: "Habit") -> list:
+def get_longest_streak(hab: "habit.Habit") -> list:
 
     longest_streak = list()
     streaks = get_streaks(hab)
@@ -73,20 +77,20 @@ def get_longest_streak(hab: "Habit") -> list:
         if len(streak) > len(longest_streak): longest_streak = streak
     return longest_streak
 
-def get_habits_by_period(container: Iterable, period: "period.Period") -> list:
+def get_habits_by_period(hab_container: Iterable, period: str) -> list:
 
-    return [hab for hab in container if hab.periodicity.periodicity == period]
+    return [hab for hab in hab_container if hab.period.period == period]
 
-def is_broken(hab: "Habit") -> bool:
+def is_broken(hab: "habit.Habit") -> bool:
 
-    time_period = (hab.periodicity(datetime.date.today(), -1), hab.periodicity(datetime.date.today(), 0))
+    time_period = (hab.period(datetime.date.today(), -1))
     counter = 0
 
     for checkoff in hab.checkoffs:
         if time_period[0] <= checkoff <= time_period[1]:
             counter += 1
 
-    if counter >= hab.periodicity.amount_checkoffs:
+    if counter >= hab.amount:
         return False
 
     return True
@@ -96,17 +100,17 @@ def get_longest_streak_of_habits(container: Iterable) -> tuple:
     linked_habit = None
     longest_streak = list()
 
-    for habit in container:
-        if len(get_longest_streak(habit)) > len(longest_streak):
-            longest_streak = get_longest_streak(habit)
-            linked_habit = habit
+    for hab in container:
+        if len(get_longest_streak(hab)) > len(longest_streak):
+            longest_streak = get_longest_streak(hab)
+            linked_habit = hab
     
     return (linked_habit, longest_streak)
 
-def list_habits(container: Iterable) -> None:
+def list_habits(hab_container: Iterable) -> None:
 
     ret_str = "stored habits:"
-    for hab in container:
+    for hab in hab_container:
         ret_str += f"\n {hab.name}"
     return ret_str
 
