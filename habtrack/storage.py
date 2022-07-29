@@ -6,7 +6,7 @@ import json, datetime, pathlib
 
 
 # ============================================= #
-# ============== Derialization ================ #
+# ============== Serialization ================ #
 # ============================================= #
 def _serialize_habit(habit: habit.Habit) -> dict:
     """_serialize_habit: helper that creates a dict from a habit.Habit

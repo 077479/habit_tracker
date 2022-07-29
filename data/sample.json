@@ -20,7 +20,7 @@
     {
         "_HABIT":true,
         "name":"eat",
-        "description":"daily[2], Streaks[3] 2/4..",
+        "description":"daily[2], Streaks[3] 2/4/2",
         "periodicity":"daily",
         "amount_checkoffs":2,
         "creation_date":730120,
@@ -53,12 +53,12 @@
             730172
         ]
     },
-    {
+    { 
         "_HABIT":true,
         "name":"vacuum_clean",
-        "description":"weekly[3], Streaks[1] 1.....",
+        "description":"weekly[3], Streaks[1] 5/1/1/1",
         "periodicity":"weekly",
-        "amount_checkoffs":1,
+        "amount_checkoffs":3,
         "creation_date":730120,
         "checkoffs": [
             730122,
@@ -92,7 +92,7 @@
     {
         "_HABIT":true,
         "name":"shop",
-        "description":"monthly[4], Streaks[1] 5/...",
+        "description":"monthly[4], Streaks[1] 8",
         "periodicity":"monthly",
         "amount_checkoffs":4,
         "creation_date":730120,

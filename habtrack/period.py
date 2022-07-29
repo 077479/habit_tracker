@@ -129,6 +129,7 @@ class Period:
         datetime.date marking the end of the timespan
         """
         all_months = start_date.year * 12 + start_date.month - 1 + increment
+        # print(all_months)
         year = all_months // 12
         month = all_months % 12 + 1
         return datetime.date(year, month, start_date.day)

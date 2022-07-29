@@ -23,100 +23,100 @@ list_checkoffs(habit)
     convinience function that prints out all checkoffs in a habit
 '''
 
+"""get_streaks: method that returns a list of list of streaks
+
+Parameter
+---------
+habit : Habit
+the habit where the streaks has to be listed
+
+Return
+------
+list
+representing the streaks as list of lists of checkoffsc e.g. 
+[[str_1_check_1, str_1_check_2]], [str_2_check_1, str_2_check_2]]
+"""
+"""_set_time_period: helper method that returns a list of list of streaks
+
+Parameter
+---------
+start : datetime.date
+    the date from where the time period has to be created
+
+Return
+------
+tuple(datetime.date, datetime.date)
+    representing the time period (from set_time_period[0] to set_time_period[1])
+"""
+"""_lst_diff: helper method that aims to mimic the difference functionality from a set
+
+Parameter
+---------
+lst_1 : list
+    the list where the elements has to be removed
+lst_2 : list
+    the list where the elements to remove are provided
+"""
+"""_set_streak_list: the actual magic happens here
+
+1. it iterates over the list of checkoffs in a habit
+2. it checks every element if its within the provided time period
+3. if it is, it is added to the streak_list in the return_list and
+    a counter is incremented
+4. the counter is checked against the amount of checkoffs needed in order to
+    mark the time_period as not broken
+5. if this check is fails, a new streak_list is added to the return_list
+6. after that the elements added to teh return_list are removed from the list with checkoffs
+
+after that it is again called with an incremented time_period
+
+Parameter
+---------
+checkoffs : list
+    list with checkoffs
+time_period : tuple
+    represents the time period => (datetime.date_1, datetime.date_2)
+ret_lst : list
+    represents the list with the list of streaks
+
+"""
 import datetime
 from typing import Iterable
 
 def get_streaks(habit : "Habit") -> list:
-    """get_streaks: method that returns a list of list of streaks
-
-    Parameter
-    ---------
-    habit : Habit
-        the habit where the streaks has to be listed
     
-    Return
-    ------
-    list
-        representing the streaks as list of lists of checkoffsc e.g. 
-        [[str_1_check_1, str_1_check_2]], [str_2_check_1, str_2_check_2]]
-    """
     def _set_time_period(start : datetime.date) -> tuple:
-        """_set_time_period: helper method that returns a list of list of streaks
-
-        Parameter
-        ---------
-        start : datetime.date
-            the date from where the time period has to be created
-
-        Return
-        ------
-        tuple(datetime.date, datetime.date)
-            representing the time period (from set_time_period[0] to set_time_period[1])
-        """
         return (period(start, 0), period(start, 1))
 
-    def _lst_diff(lst_1 : list, lst_2 : list) -> None:
-        """_lst_diff: helper method that aims to mimic the difference functionality from a set
+    def _set_streak_list() -> None:
 
-        Parameter
-        ---------
-        lst_1 : list
-            the list where the elements has to be removed
-        lst_2 : list
-            the list where the elements to remove are provided
-        """
-        for i in lst_2:
-            if i in lst_1:
-                lst_1.remove(i)
-
-    def _set_streak_list(checkoffs: list, time_period: tuple, ret_lst: list, amount_checkoffs: int) -> None:
-        """_set_streak_list: the actual magic happens here
-
-        1. it iterates over the list of checkoffs in a habit
-        2. it checks every element if its within the provided time period
-        3. if it is, it is added to the streak_list in the return_list and
-            a counter is incremented
-        4. the counter is checked against the amount of checkoffs needed in order to
-            mark the time_period as not broken
-        5. if this check is fails, a new streak_list is added to the return_list
-        6. after that the elements added to teh return_list are removed from the list with checkoffs
-
-        after that it is again called with an incremented time_period
-
-        Parameter
-        ---------
-        checkoffs : list
-            list with checkoffs
-        time_period : tuple
-            represents the time period => (datetime.date_1, datetime.date_2)
-        ret_lst : list
-            represents the list with the list of streaks
-        
-        """
         added = False
         counter = 0
-        for checkoff in checkoffs:
-            if time_period[0] <= checkoff <= time_period[1]:
+        for check in checkoffs:
+            if time_period[0] <= check <= time_period[1]:
+
                 counter += 1
-                ret_lst[-1].append(checkoff)
+                streaks_lst[-1].append(check)
+        
+        [checkoffs.remove(item) for item in streaks_lst[-1] if item in checkoffs]
 
         if counter >= amount_checkoffs: added=True
-        if not added and ret_lst[-1]: ret_lst.append(list())
+        if not added and streaks_lst[-1]: streaks_lst.append(list())
 
-        _lst_diff(checkoffs, ret_lst[-1])
-    
+
+
     checkoffs = habit.checkoffs.copy()
     period = habit.periodicity
     creation_date = habit.creation_date
-    streaks_list = [list()]
+    streaks_lst = [list()]
     time_period = _set_time_period(creation_date)
     amount_checkoffs = period.amount_checkoffs
 
     while checkoffs:
-        _set_streak_list(checkoffs, time_period, streaks_list, amount_checkoffs)
+        _set_streak_list()
         time_period = _set_time_period(time_period[1])
 
-    return streaks_list
+    return streaks_lst
 
 def get_longest_streak(habit: "Habit") -> list:
     """get_longest_streak: returns the longest streak in a habit
