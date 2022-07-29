@@ -11,8 +11,13 @@ def period_obj():
     return period.Period("monthly")
 
 @pytest.fixture
-def habit_obj():
+def habit_obj(request):
     """habit objec : name:test_habit, periodicity:monthly, desc:just here to test the modul checkoffs:[]"""
+    def remove_file():
+        if (pathlib.Path(__file__).parents[1] / "data/test_habit.json").exists():
+            (pathlib.Path(__file__).parents[1] / "data/test_habit.json").unlink()
+    request.addfinalizer(remove_file)
+
     return habit.Habit(name="test_habit", periodicity="monthly", description="just here to test the modul")
 
 @pytest.fixture

@@ -102,9 +102,14 @@ def _deserialize_habit(dct: dict) -> habit.Habit:
     
     return hab
 
-def deserialize_js() -> list:
+def deserialize_js(demo = False) -> list:
     """deserialize_js: loads all habits that are represented as json in
     the /"root/data" folder
+
+    Parameters
+    ----------
+    demo : bool
+        test bool to check if debug seasson has begun
 
     Returns
     -------
@@ -113,6 +118,12 @@ def deserialize_js() -> list:
     """
     data_dir = pathlib.Path(__file__).parents[1] / "data"
     js_files = [i for i in data_dir.iterdir() if i.suffix == ".json"]
+    
+    if pathlib.Path(__file__).parents[1] / "data/sample.json" in js_files:
+        js_files.remove(pathlib.Path(__file__).parents[1] / "data/sample.json")
+
+    if debug: js_files = pathlib.Path(__file__).parents[1] / "data/sample.json"
+    
 
     habbitse = []
 

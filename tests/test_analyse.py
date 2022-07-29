@@ -1,8 +1,8 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parents[1]))
 
-import pytest, datetime
-from habtrack import analyse, habit
+import datetime
+from habtrack import analyse
 from tests.conftest import habit_obj
 from tests.conftest import sample_habs
 
@@ -43,6 +43,8 @@ def test_get_longest_streak_2(sample_habs):
         datetime.date.fromordinal(730131)
     ]
 
+
+
 ########## - get_habits_by_period test- ############
 def test_get_habits_by_period_len_1(sample_habs):
     assert len(analyse.get_habits_by_period(sample_habs, "weekly")) == 2
@@ -80,7 +82,3 @@ def test_list_habits(sample_habs):
 ########## - list_checkoffs test - #################
 def test_list_checkoffs(sample_habs):
     assert analyse.list_checkoffs(sample_habs[0]) == None
-
-
-# for i in range(6):
-#     print(len(analyse.get_streaks(sample_habs()[i])))

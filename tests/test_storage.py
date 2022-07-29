@@ -24,10 +24,10 @@ def test__serialize_habit_dct_creation_date(habit_obj):
     assert storage._serialize_habit(habit_obj)["creation_date"] == datetime.date.today().toordinal()
 
 def test__serialize_habit_dct_checkoffs(habit_obj):
-    habit_obj.checkoffs.append(datetime.date(2000,1,1)) # 730120
-    habit_obj.checkoffs.append(datetime.date(2000,2,1)) # 730151
-    habit_obj.checkoffs.append(datetime.date(2000,3,1)) # 730180
-    habit_obj.checkoffs.append(datetime.date(2000,4,1)) # 730211
+    habit_obj.checkoffs.append(datetime.date.fromordinal(730120)) # 2000,1,1
+    habit_obj.checkoffs.append(datetime.date.fromordinal(730151)) # 2000,2,1
+    habit_obj.checkoffs.append(datetime.date.fromordinal(730180)) # 2000,3,1
+    habit_obj.checkoffs.append(datetime.date.fromordinal(730211)) # 2000,4,1
     assert storage._serialize_habit(habit_obj)["checkoffs"] == [730120, 730151, 730180, 730211]
 
 

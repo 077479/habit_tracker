@@ -1,9 +1,0 @@
-{
-  "_HABIT": true,
-  "name": "test_habit",
-  "description": "just here to test the modul",
-  "periodicity": "monthly",
-  "amount_checkoffs": 1,
-  "creation_date": 738365,
-  "checkoffs": []
-}
