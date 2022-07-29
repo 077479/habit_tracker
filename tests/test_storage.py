@@ -1,13 +1,17 @@
+# ========== - package import access - ========== #
 import pathlib, sys
 sys.path.append(str(pathlib.Path(__file__).parents[1]))
 
+
+# ========== - import - ========== #
 import datetime, pathlib, pytest
 from habtrack import storage
 from tests.conftest import habit_obj
 
-########## - _serialize_habit test - ##########
-# habit objec : name:test_habit, periodicity:monthly, desc:just here to test the modul checkoffs:[]
 
+# ========== - logic - ========== #
+
+# ===== - _serialize_habit test - ===== #
 def test__serialize_habit_type(habit_obj):
     assert isinstance(storage._serialize_habit(habit_obj), dict)
 
@@ -32,7 +36,7 @@ def test__serialize_habit_dct_checkoffs(habit_obj):
 
 
 
-########## - serialize test - ##########
+# ===== - serialize test - ===== #
 def test_serialize_single_file_creation(habit_obj):
     # habit objec : name:test_habit, periodicity:monthly, desc:just here to test the modul checkoffs:[]
     storage.serialize(habit_obj)

@@ -45,7 +45,7 @@ def get_streaks(hab : "habit.Habit") -> list:
 
     checkoffs_copy = hab.checkoffs.copy()
     streaks = [list()]
-    time_period = hab.period(hab.creation_date)
+    time_period = hab.periodicity(hab.creation_date, 1)
 
     def _set_streak_lst() -> None:
         """_set_streak_lst: helper function to break down the complexiety"""
@@ -65,7 +65,7 @@ def get_streaks(hab : "habit.Habit") -> list:
 
     while checkoffs_copy:
         _set_streak_lst()
-        time_period = hab.period(time_period[1])
+        time_period = hab.periodicity(time_period[1])
 
     return streaks
 
@@ -79,11 +79,11 @@ def get_longest_streak(hab: "habit.Habit") -> list:
 
 def get_habits_by_period(hab_container: Iterable, period: str) -> list:
 
-    return [hab for hab in hab_container if hab.period.period == period]
+    return [hab for hab in hab_container if hab.periodicity.period == period]
 
 def is_broken(hab: "habit.Habit") -> bool:
 
-    time_period = (hab.period(datetime.date.today(), -1))
+    time_period = (hab.periodicity(datetime.date.today(), -1))
     counter = 0
 
     for checkoff in hab.checkoffs:
@@ -95,19 +95,19 @@ def is_broken(hab: "habit.Habit") -> bool:
 
     return True
 
-def get_longest_streak_of_habits(container: Iterable) -> tuple:
+def get_longest_streak_of_habits(hab_container: Iterable) -> tuple:
 
     linked_habit = None
     longest_streak = list()
 
-    for hab in container:
+    for hab in hab_container:
         if len(get_longest_streak(hab)) > len(longest_streak):
             longest_streak = get_longest_streak(hab)
             linked_habit = hab
     
     return (linked_habit, longest_streak)
 
-def list_habits(hab_container: Iterable) -> None:
+def list_habits(hab_container: Iterable) -> str:
 
     ret_str = "stored habits:"
     for hab in hab_container:
@@ -115,7 +115,7 @@ def list_habits(hab_container: Iterable) -> None:
     return ret_str
 
 
-def list_checkoffs(hab: Iterable) -> None:
+def list_checkoffs(hab: Iterable) -> str:
     
     ret_str = f"{hab.name}"
     for check in hab.checkoffs:

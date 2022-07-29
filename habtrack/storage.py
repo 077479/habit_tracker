@@ -18,7 +18,7 @@ def _serialize_habit(hab: habit.Habit) -> dict:
         "_HABIT": True,
         "name": hab.name,
         "description": hab.description,
-        "periodicity": hab.period.period,
+        "periodicity": hab.periodicity.period,
         "amount": hab.amount,
         "creation_date": hab.creation_date.toordinal(),
         "checkoffs": [check.toordinal() for check in hab.checkoffs]
@@ -26,19 +26,19 @@ def _serialize_habit(hab: habit.Habit) -> dict:
 
 def serialize(hab_element: habit.Habit | list) -> None:
 
-    def _file_serialize(hab: habit.Habit) -> None:
+    def _file_serialize() -> None:
         with open(data_dir / f"{hab_element.name}.json", "w") as file:
             json.dump(hab_element , file, default=_serialize_habit, indent=2)
     
-    def _hab_container_serialize(hab_container: list) -> None:
+    def _hab_container_serialize() -> None:
         with open(data_dir / "habbitse.json", "w") as file:
             for hab in hab_element:
                 json.dump(hab, file, default=_serialize_habit, indent=2)
 
     if hab_element.__module__ == "habit":
-        _file_serialize(hab_element)
-    
-    _hab_container_serialize(hab_element)
+        _file_serialize()
+    else:
+        _hab_container_serialize()
 
 # ===== Deserialization ===== #
 def _deserialize_habit(dct: dict) -> habit.Habit:
@@ -53,7 +53,7 @@ def _deserialize_habit(dct: dict) -> habit.Habit:
     hab = habit.Habit(
         name=dct["name"],
         description=dct["description"],
-        period=dct["period"],
+        periodicity=dct["periodicity"],
         amount=dct["amount"],)
     hab.creation_date = _set_date(dct["creation_date"])
 
