@@ -43,12 +43,14 @@ def test_set_periodicity(habit_obj):
 
 # ===== - __str__ test - ===== #
 def test_habit_str_repr(habit_obj):
-    assert str(habit_obj) == f"Habit: test_habit | {str(datetime.date.today())} | monthly | amount: 1"
+    assert str(habit_obj) == f"Habit: test_habit | {str(datetime.date(2000,1,1))} | monthly | amount: 1"
 
 
 # ===== - __eq__ test - ===== #
-def test_habit_equality_true(habit_obj):
-    assert habit_obj == habit.Habit(name="test_habit", periodicity="monthly", description="just here to test the modul")
+def test_habit_equality(habit_obj):
+    hab = habit.Habit(name="test_habit", periodicity="monthly", description="just here to test the modul")
+    hab.creation_date = datetime.date(2000,1,1)
+    assert habit_obj == hab
 
 @pytest.mark.xfail
 @pytest.mark.parametrize("defect", [habit.Habit("test", "monthly"), 235, "nice", habit.Habit("john", "weekly")])
