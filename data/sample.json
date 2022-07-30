@@ -4,7 +4,7 @@
         "name":"work",
         "description":"daily[1], Streaks[2] 4/4",
         "periodicity":"daily",
-        "amount_checkoffs":1,
+        "amount":1,
         "creation_date":730120,
         "checkoffs": [
             730120,
@@ -22,7 +22,7 @@
         "name":"eat",
         "description":"daily[2], Streaks[4] 2/4/1/1",
         "periodicity":"daily",
-        "amount_checkoffs":2,
+        "amount":2,
         "creation_date":730120,
         "checkoffs": [
             730120,
@@ -40,7 +40,7 @@
         "name":"swimming",
         "description":"weekly[1], Streaks[3] 2/2/4",
         "periodicity":"weekly",
-        "amount_checkoffs":1,
+        "amount":1,
         "creation_date":730120,
         "checkoffs": [
             730123,
@@ -58,7 +58,7 @@
         "name":"vacuum_clean",
         "description":"weekly[3], Streaks[3] 5/2/1",
         "periodicity":"weekly",
-        "amount_checkoffs":3,
+        "amount":3,
         "creation_date":730120,
         "checkoffs": [
             730122,
@@ -76,7 +76,7 @@
         "name":"pay_rent",
         "description":"monthly[1], Streaks[1] 8",
         "periodicity":"monthly",
-        "amount_checkoffs":1,
+        "amount":1,
         "creation_date":730120,
         "checkoffs": [
             730120,
@@ -94,7 +94,7 @@
         "name":"shop",
         "description":"monthly[4], Streaks[1] 8",
         "periodicity":"monthly",
-        "amount_checkoffs":4,
+        "amount":4,
         "creation_date":730120,
         "checkoffs": [
             730120,

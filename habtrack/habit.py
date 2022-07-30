@@ -37,11 +37,12 @@ class Habit:
         
         equality_operations = [
             self.name == other.name,
-            self.amount == other.amount,
-            self.description == other.description,
             self.periodicity.period == other.periodicity.period,
+            self.amount == other.amount,
+            self.description == other.description,            
             self.creation_date == other.creation_date,
-            self.checkoffs == other.checkoffs]
+            self.checkoffs == other.checkoffs
+            ]
 
         for element in equality_operations:
             if not element:

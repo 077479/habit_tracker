@@ -9,7 +9,7 @@ from typing import Iterable
 
 
 # ========== - logic - ========== #
-def get_streaks(hab : "habit.Habit") -> list:
+def get_streaks(hab : object) -> list:
     """get_streaks: returns a list of lists with streaks
 
     the workflow is
@@ -65,11 +65,11 @@ def get_streaks(hab : "habit.Habit") -> list:
 
     while checkoffs_copy:
         _set_streak_lst()
-        time_period = hab.periodicity(time_period[1])
+        time_period = hab.periodicity(time_period[1], 1)
 
     return streaks
 
-def get_longest_streak(hab: "habit.Habit") -> list:
+def get_longest_streak(hab: object) -> list:
 
     longest_streak = list()
     streaks = get_streaks(hab)
@@ -81,7 +81,7 @@ def get_habits_by_period(hab_container: Iterable, period: str) -> list:
 
     return [hab for hab in hab_container if hab.periodicity.period == period]
 
-def is_broken(hab: "habit.Habit") -> bool:
+def is_broken(hab: object) -> bool:
 
     time_period = (hab.periodicity(datetime.date.today(), -1))
     counter = 0
