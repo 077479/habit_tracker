@@ -1,3 +1,26 @@
+"""
+module analyse: analyse modul of the habit_tracker tool (habtrack)
+    provides functionality to get insight into habits or list of habits
+
+===== Imports =====
+built-in:
+    datetime, typing.Iterable
+
+===== Functions =====
+get_streaks: returns a list of lists where each list is representing a streak
+    e.g. [[streak_1_date1, streak_1_date2, ...], [streak_2_date1, streak_2_date2, ...], [streak_3_date1, streak_3_date2, ...]]
+get_longest_streak: returns the streak_list with the most elements, representing the longest streak of a habit
+get_habits_by_period: returns a list of habits with the same period of a given list of habits
+is_broken: checks if a habit was fullfilled in his last time-period
+get_longest_streak_of_habits: get the longest streak out of a list of habits
+list_habits: returns a formatted str with the names of all habits in a list of habits
+list_checkoffs: returns a formatted str with the name of the habit and all checkoffs
+
+
+===== Dependencies =====
+created and tested with "pytest 7.1.2" and "Python 3.10.5
+"""
+
 # ========== - package import access - ========== #
 import pathlib, sys
 sys.path.append(str(pathlib.Path(__file__).parent))
@@ -70,6 +93,16 @@ def get_streaks(hab : object) -> list:
     return streaks
 
 def get_longest_streak(hab: object) -> list:
+    """get_longest_streak: gets teh longest streak of a habti
+
+    goes through the streaks and takes the longest one
+
+    ===== Parameters =====
+    hab: habit.Habit
+
+    ===== Returns =====
+    longest_streak : list | list with the dates of the checkoffs representing the longest streak
+    """
 
     longest_streak = list()
     streaks = get_streaks(hab)
@@ -78,10 +111,30 @@ def get_longest_streak(hab: object) -> list:
     return longest_streak
 
 def get_habits_by_period(hab_container: Iterable, period: str) -> list:
+    """get_habits_by_period: searches for habits with the same periodicity within a list of habti obj
+
+    ===== Parameters =====
+    hab_container : list | the habit list
+    period : str | the desired periodicity
+            
+    ===== Returns =====
+    list | with the habits with the desired periodicity
+    """
 
     return [hab for hab in hab_container if hab.periodicity.period == period]
 
 def is_broken(hab: object) -> bool:
+    """is_broken: checks if the last time-period of the given habit was fullfilled
+
+    just creates the last time period and checks the check offs against it
+    RETURNS TRUE IF THE HHABIT WAS NOT FULLFILLED
+
+    ===== Parameters =====
+    hab : habit.Habit
+
+    ===== Returns =====
+    bool : representing if the habit was fullfilled or not
+    """
 
     time_period = (hab.periodicity(datetime.date.today(), -1))
     counter = 0
@@ -96,6 +149,15 @@ def is_broken(hab: object) -> bool:
     return True
 
 def get_longest_streak_of_habits(hab_container: Iterable) -> tuple:
+    """get_longest_streak_of_habits: checks for the habit wit hte longest streak in
+        a list of habits
+
+    ===== Parameters =====
+    hab_container : list
+            
+    ===== Returns =====
+    tuple | (linked_habit : habit.Habit, longest_streak : list)
+    """
 
     linked_habit = None
     longest_streak = list()
@@ -108,6 +170,14 @@ def get_longest_streak_of_habits(hab_container: Iterable) -> tuple:
     return (linked_habit, longest_streak)
 
 def list_habits(hab_container: Iterable) -> str:
+    """list_habits: returns a str representing all habits in a list of habits
+
+    ===== Parameters =====
+    hab_container : list    
+        
+    ===== Returns =====
+    ret_str : str | the formatted string with the names of the habits
+    """
 
     ret_str = "stored habits:"
     for hab in hab_container:
@@ -115,7 +185,18 @@ def list_habits(hab_container: Iterable) -> str:
     return ret_str
 
 
-def list_checkoffs(hab: Iterable) -> str:
+def list_checkoffs(hab: object) -> str:
+    """list_checkoffs: returns a str with the name and checkoffs
+
+    ===== Parameters =====
+    hab : habit.Habit | the habit with the desired information
+            
+    ===== Returns =====
+    ret_str : str | the formatted string with the name and the checkoffs of the habit
+
+    ===== Exceptions =====
+
+    """
     
     ret_str = f"{hab.name}"
     for check in hab.checkoffs:

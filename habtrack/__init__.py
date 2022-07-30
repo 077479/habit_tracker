@@ -1,4 +1,21 @@
 """
+Package
+
+===== linked API Calls =====
+
+===== Classes =====
+
+===== Functions =====
+
+===== Imports =====
+
+===== Dependencies =====
+created and tested with "pytest 7.1.2" and "Python 3.10.5
+
+===== Exceptions =====
+"""
+
+"""
 [optional]
 - for management
     - python habit_tracker.py mngt --create -n "name" -p "period" [-d "description"] [-a "amount"]
