@@ -59,12 +59,14 @@ def change_period(hab: habit.Habit, periodicity: str, amount: int = 1) -> None:
     """
     hab.set_periodicity(periodicity, amount)
 
-def delete_habit(hab: habit.Habit) -> None:
+def delete_habit(hab: habit.Habit, habit_container: list) -> None:
     """delete_habit: removes a given habit from context
 
     does so without warning!
 
     ===== Parameters =====
     hab : habit.Habit | the to be gone desired habit
+    habit_container : list | representing the storage from where it should be removed
     """
+    habit_container.remove(hab)
     del hab

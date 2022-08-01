@@ -141,8 +141,9 @@ def deserialize(file_source: str = None, demo: bool = False) -> list:
 
     hab_container = []
 
-    with open(js_file, "r") as file:
-        for i in json.load(file):
-            hab_container.append(_deserialize_habit(i))
+    if js_file.exists() and not js_file.stat().st_size == 0:
+        with open(js_file, "r") as file:
+            for i in json.load(file):
+                hab_container.append(_deserialize_habit(i))
     
     return hab_container
