@@ -1,0 +1,18 @@
+{
+  "_HABIT": true,
+  "name": "work",
+  "description": "daily[1], Streaks[2] 4/4",
+  "periodicity": "daily",
+  "amount": 1,
+  "creation_date": 730120,
+  "checkoffs": [
+    730120,
+    730121,
+    730122,
+    730123,
+    730125,
+    730126,
+    730127,
+    730128
+  ]
+}

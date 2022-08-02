@@ -1,3 +1,8 @@
+"""
+heavily relies on storage working! => sample habs laods sample file with storage.deserialize("demo")
+can easily be changed(the informaton for the creation of the sample file is complety in the conftest.py)
+the approach was choosen to tests analyse and storage in one go (as kind of integration test)
+"""
 # ========== - package import access - ========== #
 import pathlib, sys
 sys.path.append(str(pathlib.Path(__file__).parents[1]))

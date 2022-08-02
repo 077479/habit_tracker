@@ -181,7 +181,7 @@ def list_habits(hab_container: Iterable) -> str:
 
     ret_str = "stored habits:"
     for hab in hab_container:
-        ret_str += f"\n {hab.name}"
+        ret_str += f"\n    {hab}"
     return ret_str
 
 
@@ -198,8 +198,8 @@ def list_checkoffs(hab: object) -> str:
 
     """
     
-    ret_str = f"{hab.name}"
+    ret_str = f"{hab}"
     for check in hab.checkoffs:
-        ret_str += f"\n  {check}"
+        ret_str += f"\n   {check}"
     
     return ret_str

@@ -57,7 +57,7 @@ def _serialize_habit(hab: habit.Habit) -> dict:
         "checkoffs": [check.toordinal() for check in hab.checkoffs]
     }
 
-def serialize(hab_element: habit.Habit | list) -> None:
+def serialize(hab_element: habit.Habit | list, demo: bool = False) -> None:
     """serialize: saves a habit or list of habits to a json file
 
     creates a json fle with the name of hte habit as json file if provided with a single Habit obj
@@ -66,23 +66,26 @@ def serialize(hab_element: habit.Habit | list) -> None:
     ===== Parameters =====
     hab_element : habit.Habit | list | the representation that has to be stored to disk
     """
-
+    
     def _file_serialize() -> None:
         """_file_serialize: stores a single habit object"""
 
-        with open(data_dir / f"{hab_element.name}.json", "w") as file:
+        with open(js_file, "w") as file:
             json.dump(hab_element , file, default=_serialize_habit, indent=2)
     
     def _hab_container_serialize() -> None:
         """_hab_container_serialize: stores a list of habits"""
 
-        with open(data_dir / "habtrack.json", "w") as file:
+        with open(js_file, "w") as file:
             json.dump(hab_element, file, default=_serialize_habit, indent=2)
 
     if isinstance(hab_element, habit.Habit):
+        js_file = data_dir / f"{hab_element.name}.json"
         _file_serialize()
 
     else:
+        js_file = data_dir / "habtrack.json"
+        if demo: js_file = data_dir / "sample.json"
         _hab_container_serialize()
 
 # ===== Deserialization ===== #

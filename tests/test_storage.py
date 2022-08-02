@@ -6,7 +6,7 @@ sys.path.append(str(pathlib.Path(__file__).parents[1]))
 # ========== - import - ========== #
 import datetime, pathlib, pytest
 from habtrack import storage
-from tests.conftest import habit_obj
+from tests.conftest import sample_habs
 
 
 # ========== - logic - ========== #
@@ -104,11 +104,13 @@ def test_deserialize_smoke():
 def test_deserialize_type():
     assert isinstance(storage.deserialize(), list)
 
-def test_deserialize_demo_type():
-    assert storage.deserialize(demo=True)[0].__module__ == "habit"
+def test_deserialize_demo_type(sample_habs):
+    sample_habs
+    assert storage.deserialize(file_source="tests")[0].__module__ == "habit"
 
-def test_deserialize_demo_len():
-    assert len(storage.deserialize(demo=True)) == 6
+def test_deserialize_demo_len(sample_habs):
+    sample_habs
+    assert len(storage.deserialize(file_source="tests")) == 6
 
 def test_deserialize_file_source_len(habit_obj):
     storage.serialize([habit_obj])
