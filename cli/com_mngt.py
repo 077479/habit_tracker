@@ -1,3 +1,20 @@
+"""
+module mngt:
+    subclass of Command representing the CLI-Command mngt
+    (management) for the habit tracker tool habtrack
+
+===== Imports =====
+package-intern:
+    habtrack
+    cli.command
+
+===== Classes =====
+Mngt(command.Command):
+    accesses the mngt functionality
+
+===== Dependencies =====
+created and tested with "pytest 7.1.2" and "Python 3.10.5
+"""
 # ========== - package import access - ========== #
 import pathlib, sys
 sys.path.append(str(pathlib.Path(__file__).parents[1]))
@@ -10,8 +27,38 @@ from cli import command
 # ========== - logic - ========== #
 
 class Mngt(command.Command):
-    
+    """
+    class Mngt(command.Command):
+        accesses the mngt functionality
+
+        routes given further (after the actua command) arguments to 
+        sub-commands stored as attributes of the object
+        relies heavily on the functionality of the Command class
+        each sub-command (method) processes further given arguments
+        defines mandatory arguments and processes its functionality
+
+        the habits are all stored in one json file project_root/data/habtrack.json
+        all there stored habits are recognised as actual active habits
+        everytime a cli call is made this file and its habits are loaded
+
+    ===== Methods =====
+    create:
+        creates a habit
+    check_off:
+        checks a habit off (marks it as one time fullfilled for a day)
+    change_period:
+        changes the periodicity of a habit
+    delete_habit:
+        deletes a habit without warning
+    """    
     def create(self):
+        """
+        Mngt.create:
+            creates a habit and adds it to the habtrack.json file
+
+            needs -n, -p as minimal arguments
+            further accepts -d, -a as arguments to specify the habit
+        """
 
         args = self._get_args()
         self._get_missing_out(args, "n", "p")
@@ -29,6 +76,13 @@ class Mngt(command.Command):
         self._store()
 
     def check_off(self):
+        """
+        Mngt.check_off:
+            marks a habit as one tme fullfilled for the actual day
+
+            needs the -n argument to identify the habit
+        """
+
         args = self._get_args()
         self._get_missing_out(args, "n")
 
@@ -39,6 +93,12 @@ class Mngt(command.Command):
         self._store()
 
     def change_period(self):
+        """
+        Mngt.change_period:
+            changes teh period of a habit
+
+            needs the -n, -p argument to identify the habit/periodicity
+        """
         args = self._get_args()
         self._get_missing_out(args, "n", "p")
         habtrack.main.change_period(self._habits[args["n"]], args["p"])
@@ -46,6 +106,10 @@ class Mngt(command.Command):
         self._store()
 
     def delete_habit(self):
+        """
+        Mngt.delete_habit:
+            deletes a habit from context and from the file habtrack.json
+        """
         args = self._get_args()
         self._get_missing_out(args, "n")
 

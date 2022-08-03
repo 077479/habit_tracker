@@ -1,3 +1,14 @@
+"""
+module cli_data: provides needed hardwired data
+
+===== Globals =====
+sample : str
+    the default sample data
+
+man : str
+    the manual for the tool
+"""
+
 sample = """[
         {
             "_HABIT":true,
