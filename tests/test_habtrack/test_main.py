@@ -1,12 +1,12 @@
 # ========== - package import access - ========== #
 import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parents[1]))
+sys.path.append(str(pathlib.Path(__file__).parents[2]))
 
 
 # ========== - import - ========== #
 import pytest, datetime
 from habtrack import main
-from conftest import habit_obj
+from conftest import habit_obj, sample_habs
 
 
 # ========== - logic - ========== #
@@ -23,12 +23,13 @@ def test_create_habit_name():
 
 
 # ===== - delete_habit test - ===== #
-@pytest.mark.skip
-def test_delete_habit_test(habit_obj):
-    hab = habit_obj
-    main.delete_habit(hab)
-    with pytest.raises(UnboundLocalError):
-        assert hab.name == "test_habit"
+def test_delete_habit_test(sample_habs):
+    habs = sample_habs
+    
+    assert habs[0].name == "work"
+    main.delete_habit(habs[0], habs)
+    with pytest.raises(AttributeError):
+        assert habs[0] == "work"
 
 
 # ===== - check_off test - ===== #

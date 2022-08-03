@@ -5,7 +5,7 @@ the approach was choosen to tests analyse and storage in one go (as kind of inte
 """
 # ========== - package import access - ========== #
 import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parents[1]))
+sys.path.append(str(pathlib.Path(__file__).parents[2]))
 
 
 # ========== - import - ========== #

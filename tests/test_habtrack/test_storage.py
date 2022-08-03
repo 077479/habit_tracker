@@ -1,6 +1,6 @@
 # ========== - package import access - ========== #
 import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parents[1]))
+sys.path.append(str(pathlib.Path(__file__).parents[2]))
 
 
 # ========== - import - ========== #
@@ -39,7 +39,7 @@ def test__serialize_habit_dct_checkoffs(habit_obj):
 # ===== - serialize test - ===== #
 def test_serialize_single_file_creation(habit_obj):
     storage.serialize(habit_obj)
-    assert (pathlib.Path(__file__).parents[1] / "data/test_habit.json").exists()
+    assert (pathlib.Path(__file__).parents[2] / "data/test_habit.json").exists()
 
 
 @pytest.mark.parametrize("result", [
@@ -55,13 +55,13 @@ def test_serialize_single_file_creation(habit_obj):
 ])
 def test_serialize_single_file_content(habit_obj, result):
     storage.serialize(habit_obj)
-    with open (pathlib.Path(__file__).parents[1] / "data/test_habit.json", "r") as file:
+    with open (pathlib.Path(__file__).parents[2] / "data/test_habit.json", "r") as file:
         for line in file.readline():
             line == result
 
 def test_serialize_collection_file_creation(habit_obj):
     storage.serialize([habit_obj])
-    assert (pathlib.Path(__file__).parents[1] / "data/habtrack.json").exists()
+    assert (pathlib.Path(__file__).parents[2] / "data/habtrack.json").exists()
 
 @pytest.mark.parametrize("result", [
     '[',
@@ -78,7 +78,7 @@ def test_serialize_collection_file_creation(habit_obj):
 ])
 def test_serialize_collection_file_content(habit_obj, result):
     storage.serialize([habit_obj])
-    with open (pathlib.Path(__file__).parents[1] / "data/habtrack.json", "r") as file:
+    with open (pathlib.Path(__file__).parents[2] / "data/habtrack.json", "r") as file:
         for line in file.readline():
             line == result
 
