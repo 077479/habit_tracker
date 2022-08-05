@@ -16,11 +16,6 @@ Analyse(command.Command):
 created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
 
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parents[1]))
-
-
 # ========== - import - ========== #
 import habtrack
 from cli import command

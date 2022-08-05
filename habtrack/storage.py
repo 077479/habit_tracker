@@ -30,21 +30,16 @@ TypeError
     if a given dict that has to be translated into a Habit is not valid
 """
 
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parent))
-
-
 # ========== - import - ========== #
-import habit
-import json, datetime
+import habtrack.habit
+import json, datetime, pathlib
 
 
 # ========== - logic - ========== #
 data_dir = pathlib.Path(__file__).parents[1] / "data"
 
 # ===== Serialization ===== #
-def _serialize_habit(hab: habit.Habit) -> dict:
+def _serialize_habit(hab: habtrack.habit.Habit) -> dict:
     """
     storage._serialize_habit:
         helper that creates a dictionary from a habit obj
@@ -68,7 +63,7 @@ def _serialize_habit(hab: habit.Habit) -> dict:
         "checkoffs": [check.toordinal() for check in hab.checkoffs]
     }
 
-def serialize(hab_element: habit.Habit | list, demo: bool = False) -> None:
+def serialize(hab_element: habtrack.habit.Habit | list, demo: bool = False) -> None:
     """
     storage.serialize:
         saves a habit or list of habits to a json file
@@ -93,7 +88,7 @@ def serialize(hab_element: habit.Habit | list, demo: bool = False) -> None:
         with open(js_file, "w") as file:
             json.dump(hab_element, file, default=_serialize_habit, indent=2)
 
-    if isinstance(hab_element, habit.Habit):
+    if isinstance(hab_element, habtrack.habit.Habit):
         js_file = data_dir / f"{hab_element.name}.json"
         _file_serialize()
 
@@ -103,7 +98,7 @@ def serialize(hab_element: habit.Habit | list, demo: bool = False) -> None:
         _hab_container_serialize()
 
 # ===== Deserialization ===== #
-def _deserialize_habit(dct: dict) -> habit.Habit:
+def _deserialize_habit(dct: dict) -> habtrack.habit.Habit:
     """
     storage._deserialize_habit:
         helper that creates a Habit obj from a given dict
@@ -127,7 +122,7 @@ def _deserialize_habit(dct: dict) -> habit.Habit:
         """returns date from ordinal, created just for better readability"""
         return datetime.date.fromordinal(ordinal)
 
-    hab = habit.Habit(
+    hab = habtrack.habit.Habit(
         name=dct["name"],
         description=dct["description"],
         periodicity=dct["periodicity"],

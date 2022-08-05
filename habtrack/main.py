@@ -20,17 +20,12 @@ delete_habit:
 created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
 
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parent))
-
-
 # ========== - import - ========== #
-import habit
+import habtrack.habit
 
 
 # ========== - logic - ========== #
-def create_habit(name: str, periodicity: str, description: str = "", amount: int = 1)-> habit.Habit:
+def create_habit(name: str, periodicity: str, description: str = "", amount: int = 1)-> habtrack.habit.Habit:
     """
     main.create_habit:
         creates a habit and returns it
@@ -49,9 +44,9 @@ def create_habit(name: str, periodicity: str, description: str = "", amount: int
     habit.Habit
     """
  
-    return habit.Habit(name=name, periodicity=periodicity, description=description, amount=amount)
+    return habtrack.habit.Habit(name=name, periodicity=periodicity, description=description, amount=amount)
 
-def check_off(hab: habit.Habit) -> None:
+def check_off(hab: habtrack.habit.Habit) -> None:
     """
     main.check_off:
         checks off a specific habit (marks a habit as done one time)
@@ -63,7 +58,7 @@ def check_off(hab: habit.Habit) -> None:
 
     hab.check_off()
 
-def change_period(hab: habit.Habit, periodicity: str, amount: int = 1) -> None:
+def change_period(hab: habtrack.habit.Habit, periodicity: str, amount: int = 1) -> None:
     """
     main.change_period:
         changes the period of a given habit
@@ -80,7 +75,7 @@ def change_period(hab: habit.Habit, periodicity: str, amount: int = 1) -> None:
 
     hab.set_periodicity(periodicity, amount)
 
-def delete_habit(hab: habit.Habit, habit_container: list) -> None:
+def delete_habit(hab: habtrack.habit.Habit, habit_container: list) -> None:
     """
     main.delete_habit:
         removes a given habit from context

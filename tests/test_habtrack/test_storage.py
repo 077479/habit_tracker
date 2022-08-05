@@ -1,8 +1,3 @@
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parents[2]))
-
-
 # ========== - import - ========== #
 import datetime, pathlib, pytest
 from habtrack import storage
@@ -106,7 +101,7 @@ def test_deserialize_type():
 
 def test_deserialize_demo_type(sample_habs):
     sample_habs
-    assert storage.deserialize(file_source="tests")[0].__module__ == "habit"
+    assert storage.deserialize(file_source="tests")[0].__module__ == "habtrack.habit"
 
 def test_deserialize_demo_len(sample_habs):
     sample_habs

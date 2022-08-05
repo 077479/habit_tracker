@@ -1,8 +1,3 @@
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parents[2]))
-
-
 # ========== - import - ========== #
 import pytest, datetime
 from habtrack import main
@@ -10,12 +5,10 @@ from conftest import habit_obj, sample_habs
 
 
 # ========== - logic - ========== #
-
-
 # ===== - create_habit test - ===== #
 def test_create_habit_type():
     hab = main.create_habit(name="NEMO_TEST", periodicity="daily")
-    assert hab.__module__ == "habit"
+    assert hab.__module__ == "habtrack.habit"
 
 def test_create_habit_name():
     hab = main.create_habit(name="NEMO_TEST", periodicity="daily")
@@ -45,7 +38,7 @@ def test_check_off_date(habit_obj):
 # ===== - change_period test - ===== #
 def test_change_period_type(habit_obj):
     main.change_period(habit_obj, "daily")
-    assert habit_obj.periodicity.__module__ == "period"
+    assert habit_obj.periodicity.__module__ == "habtrack.period"
     
 def test_change_period_name(habit_obj):
     main.change_period(habit_obj, "daily")

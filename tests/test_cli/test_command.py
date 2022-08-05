@@ -1,75 +1,117 @@
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parents[2]))
-
-
 # ========== - import - ========== #
 from unittest.mock import patch, Mock
-import cli, habtrack, pytest
+import pytest, cli, unittest
 
 
 # ========== - logic - ========== #
-@patch.object(sys, 'argv', ["", "", "__str__"])
-def test_type_object():
-    assert type(cli.command.Command(False)) == cli.command.Command
+orig_argv = cli.command.sys.argv
+fake_argv = ["", "", "__str__", "-n=test"]
+fake_hab = Mock()
+fake_hab.name = "fake_hab"
 
-@patch.object(sys, 'argv', ["", "", "__str__"])
-def test_type_attr_1():
-    assert type(cli.command.Command(False)._habits) == dict
 
-@patch.object(sys, 'argv', ["", "", "__str__"])
-def test_type_attr_2():
-    assert cli.command.Command(True)._demo == True
-    assert cli.command.Command(False)._demo == False
-
-@patch.object(sys, 'argv', ["", "", "__str__"])
-def test_attribute__subcommand():
-    assert cli.command.Command(False)._sub_command == "__str__"
-
-@patch.object(sys, 'argv', ["", "", "__str__", "-n", "name"])
-def test__get_args():
-    assert cli.command.Command(False)._get_args()["n"] == "name"
-
-@patch.object(sys, 'argv', ["", "", "__str__"])
-def test_get_habits():
-    hab = Mock()
-    hab.name = "test"
+# ===== init ===== #
+class TestCommand(unittest.TestCase):
     
-    with patch.object(habtrack.storage, "deserialize", return_value=[hab]):
-        assert cli.command.Command(False)._habits["test"].name == "test"
+    @classmethod
+    def setUpClass(cls):
+        """setup the test environment"""
+        cls.fake_hab = Mock()
+        cls.fake_hab.name = "fake_hab"
 
-@patch.object(sys, 'argv', ["", "", "__str__"])
-def test_get_habit_lst():
-    hab = Mock()
-    hab.name = "test"
-    
-    with patch.object(habtrack.storage, "deserialize", return_value=[hab]):
-        assert cli.command.Command(False)._get_habit_lst()[0].name == "test"
+        cls.orig_sys = cli.command.sys
+        cls.orig_habtrack_storage = cli.command.habtrack.storage
 
-@patch.object(sys, 'argv', ["", "", "__str__"])
-def test_store():
-    with patch.object(habtrack.storage, "serialize") as fake_storage:
+        cli.command.sys = Mock()
+        cli.command.sys.argv = ["", "", "__str__", "-n=test", "-p=weekly"]
+
+        cli.command.habtrack.storage = Mock()
+        cli.command.habtrack.storage.deserialize.return_value = [TestCommand.fake_hab]
+        cli.command.habtrack.storage.serialize.return_value = "storage"
+
+
+
+    def test_class_init_type(self):
+        """test if the class is instantiable without error"""
+        assert type(cli.command.Command(False)) == cli.command.Command
+
+    def test_class_init_demo(self):
+        """test for the correct assignment of _demo"""
+        assert cli.command.Command(False)._demo == False
+
+    def test_class_init_sub_command(self):
+        """test of correct assignment of sub_command"""
+        assert cli.command.Command(False)._sub_command == "__str__"
+
+
+    # ===== _get_args ===== #
+    def test_get_args_type(self):
+        """test type of return"""
+        assert type(cli.command.Command(False)._get_args()) == dict
+
+    def test_get_args_args(self):
+        """test for correct content of the args"""
+        assert cli.command.Command(False)._get_args()["n"] == "test"
+
+
+    # ===== _get_habits ===== #
+    def test_get_habits_type(self):
+        """test for correct type"""
+        assert type(cli.command.Command(False)._habits) == dict
+
+    def test_get_habits_content(self):
+        """test for correct content"""
+        assert cli.command.Command(False)._habits["fake_hab"].name == "fake_hab"
+
+
+    # ===== _get_habit_lst ===== #
+    def test_get_habit_lst_type(self):
+        """test for correct type"""
+        assert type(cli.command.Command(False)._get_habit_lst()) == list
+
+    def test_get_habit_lst_content(self):
+        """test for correct content"""
+        assert cli.command.Command(False)._get_habit_lst()[0].name == "fake_hab"
+
+
+    # ===== _store ===== #
+    def test_store_call(self):
+        """test for the correct call"""
         cli.command.Command(False)._store()
-        assert fake_storage.call_count == 1
+        cli.command.habtrack.storage.serialize.assert_called()
 
 
-@patch.object(sys, 'argv', ["", "", "__str__"])
-def test_get_success_out():
-    with patch("builtins.print") as fake_print:
-        cli.command.Command(False)._get_success_out("Test", "asserted")
-        assert fake_print.call_count == 1
-        fake_print.assert_called_once()
+    # ===== _get_success_out ===== #
 
-@patch.object(sys, 'argv', ["", "", "__str__"])
-def test_get_missing_out():
-    with pytest.raises(SystemExit) as fake_sysexit:
-        cli.command.Command(False)._get_missing_out({1:None}, 1)
-    assert fake_sysexit.type == SystemExit
+    def test_get_success_out_content(self):
+        """test for the correct print call"""
+        with patch("builtins.print") as patch_print:
+            cli.command.Command(False)._get_success_out("patch", "called")
+        patch_print.assert_called_with("DONE, 'patch' is called")
 
-@patch.object(sys, 'argv', ["", "", "__str__"])
-def test_get_wrong_sub_out():
-    with pytest.raises(SystemExit) as fake_sysexit:
-        with patch("builtins.print") as fake_print:
-            cli.command.Command(False)._get_wrong_sub_out()
-            assert fake_print.call_count == 1
-            fake_print.assert_called_once()
+
+    # ===== _get_missing_out ===== #
+    def test_get_missing_out_content(self):
+        """test for the correct print call"""
+        with patch("builtins.print") as patch_print:
+            with pytest.raises(SystemExit):
+                cli.command.Command(False)._get_missing_out({"-n":None}, "-n")
+                # {sub_command}, {args} 
+        patch_print.assert_called_with("ERROR!!!\nto perform __str__ the arguments ('-n',) are needed!\nExiting . . .")
+
+
+    # ===== _get_wrong_sub_out ===== #
+    def test_get_wrong_sub_out_content(self):
+        """test for the correct amount of print calls"""
+        with patch("builtins.print") as patch_print:
+            with pytest.raises(SystemExit):
+                cli.command.Command(False)._get_wrong_sub_out()
+        assert patch_print.call_count == 2
+
+
+
+    @classmethod
+    def tearDownClass(cls):
+        """reset the mocks to origin"""
+        cli.command.sys = TestCommand.orig_sys
+        cli.command.habtrack.storage = TestCommand.orig_habtrack_storage

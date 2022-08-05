@@ -17,12 +17,6 @@ created and tested with "pytest 7.1.2" and "Python 3.10.5
 TypeError:
     when initializing the period object, and a wrong str repr of the periodicity is given
 """
-
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parent))
-
-
 # ========== - import - ========== #
 import datetime
 

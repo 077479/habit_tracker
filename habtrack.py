@@ -20,4 +20,4 @@ import cli
 # ========== - logic - ========== #
 # ===== Entry Point ===== #
 if __name__ == "__main__":
-    cli.cli_start.CLI_Start()
+    cli.cli_start.CliStart()

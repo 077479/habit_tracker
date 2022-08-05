@@ -3,6 +3,10 @@ module cli_start: starts the cli for hte habit tool habtrack
 
 
 ===== Imports =====
+built-ins
+    argparse
+    sys
+    pathlib
 package-intern
     habtrack
     cli.com_analyse
@@ -15,19 +19,14 @@ package-intern
 ===== Dependencies =====
 created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parents[1]))
-
-
 # ========== - import - ========== #
-import argparse
+import argparse, sys, pathlib
 import habtrack
 from cli import com_analyse, com_mngt, com_storage, cli_data
 
 
 # ========== - logic - ========== #
-class CLI_Start:
+class CliStart:
     """
     class Cli_Handler: entry point of an CLI of the habit tracking tool Habtrack
 
@@ -80,7 +79,16 @@ class CLI_Start:
 
         args = parser.parse_args(sys.argv[1:2])
         
+        self.test_first_time()
+
         getattr(self, args.command)()
+
+    def test_first_time(self):
+        """get the first time user message out"""
+        with open(pathlib.Path(__file__).parents[1] / "data/habtrack.json", "r") as file:
+            hab_js = file.readlines()
+        if len(hab_js) < 5:
+            print("there seems to be no data stored, is this your first time with this tool?\nif so you should run 'python habtrack.py man'")
 
     def mngt(self):
         """

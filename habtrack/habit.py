@@ -6,7 +6,7 @@ module habit:
 built-in:
     datetime
 package-intern:
-    period
+    habtrack.period
 
 ===== Classes =====
 Habit:
@@ -16,13 +16,8 @@ Habit:
 created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
 
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parent))
-
-
 # ========== - import - ========== #
-import period
+import habtrack.period
 import datetime
 
 
@@ -77,7 +72,7 @@ class Habit:
 
         self._HABIT = True
         self.name = name
-        self.periodicity = period.Period(periodicity)
+        self.periodicity = habtrack.period.Period(periodicity)
         self.amount = amount
         self.description = description
         self.creation_date = datetime.date.today()
@@ -103,7 +98,7 @@ class Habit:
             amount of check-offs needed in order to fullfill the requirement of the habit
         """
 
-        self.periodicity = period.Period(arg_periodicity)
+        self.periodicity = habtrack.period.Period(arg_periodicity)
         if arg_amount: self.amount = arg_amount
     
     def __str__(self) -> str:

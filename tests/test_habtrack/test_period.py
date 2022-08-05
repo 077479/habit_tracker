@@ -1,8 +1,3 @@
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parents[2]))
-
-
 # ========== - import - ========== #
 from habtrack import period
 import pytest, datetime

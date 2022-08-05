@@ -11,10 +11,10 @@ package-intern:
 created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
 
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parent))
-
-
 # ========== - import - ========== #
-import cli_start
+import cli.cli_start
+import cli.cli_data
+import cli.com_analyse
+import cli.com_mngt
+import cli.com_storage
+import cli.command

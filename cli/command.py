@@ -4,6 +4,7 @@ module command: provides the interface for the command implementations
 ===== Imports =====
 built-in:
     argparse
+    sys
 package-intern:
     habtrack
 
@@ -15,14 +16,9 @@ Command:
 created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
 
-
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parents[1]))
-
-
 # ========== - import - ========== #
-import habtrack, argparse
+import argparse, sys
+import habtrack
 
 
 # ========== - logic - ========== #
@@ -71,7 +67,7 @@ class Command:
         parser.add_argument(
             "sub_command",
             metavar=f"{type(self).__name__}",
-            help=f"{[str(i) for i in dir(self) if not i.startswith('_')]}"
+            help=f"wrong command: {[str(i) for i in dir(self) if not i.startswith('_')]}"
             )
         
         args = parser.parse_args(sys.argv[2:3])
@@ -127,7 +123,7 @@ class Command:
         Command._store:
             helper method to save the habits to file
         """
-        habtrack.storage.serialize([self._habits[i] for i in self._habits], demo=self._demo)
+        habtrack.storage.serialize([self._habits[i] for i in self._habits.keys()], demo=self._demo)
 
     def _get_success_out(self, arg_substantiv, arg_verb) -> None:
         """

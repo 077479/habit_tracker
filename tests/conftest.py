@@ -1,11 +1,10 @@
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parents[1]))
-
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).parents[1]))
 
 # ========== - import - ========== #
 from habtrack import habit, storage
-import pytest, datetime, json
+from unittest.mock import create_autospec
+import pytest, datetime, pathlib
 
 # ========== - logic - ========== #
 @pytest.fixture

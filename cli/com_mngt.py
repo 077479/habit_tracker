@@ -15,17 +15,12 @@ Mngt(command.Command):
 ===== Dependencies =====
 created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
-# ========== - package import access - ========== #
-import pathlib, sys
-sys.path.append(str(pathlib.Path(__file__).parents[1]))
-
 
 # ========== - import - ========== #
 import habtrack
 from cli import command
 
 # ========== - logic - ========== #
-
 class Mngt(command.Command):
     """
     class Mngt(command.Command):
@@ -50,7 +45,8 @@ class Mngt(command.Command):
         changes the periodicity of a habit
     delete_habit:
         deletes a habit without warning
-    """    
+    """
+    
     def create(self):
         """
         Mngt.create:
