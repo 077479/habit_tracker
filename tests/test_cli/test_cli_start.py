@@ -14,12 +14,14 @@ class TestCliStart(unittest.TestCase):
         cls.orig_mngt = cli.cli_start.com_mngt
         cls.orig_data = cli.cli_start.cli_data
         cls.orig_habtrack = cli.cli_start.habtrack
+        cls.orig_manual = cli.cli_start.manual
 
         cli.cli_start.com_analyse = Mock()
         cli.cli_start.com_storage = Mock()
         cli.cli_start.com_mngt = Mock()
         cli.cli_start.cli_data = Mock()
-        cli.cli_start.cli_data.man = "man"
+        cli.cli_start.manual = Mock()
+        cli.cli_start.manual.run.return_value = "man"
 
         cli.cli_start.habtrack = Mock()
 
@@ -76,9 +78,9 @@ class TestCliStart(unittest.TestCase):
     @patch.object(cli.cli_start.sys, "argv", ["", "storage"])
     def test_man_print(self):
         """test correct print input"""
-        with patch("builtins.print") as patch_print:
-            cli.cli_start.CliStart().man()
-        patch_print.assert_called_with("man")
+        cli.cli_start.CliStart().man()
+        cli.cli_start.manual.run.assert_called()
+        
 
     @classmethod
     def tearDownClass(cls):
@@ -89,3 +91,4 @@ class TestCliStart(unittest.TestCase):
         cli.cli_start.com_mngt = TestCliStart.orig_mngt
         cli.cli_start.cli_data = TestCliStart.orig_data
         cli.cli_start.habtrack = TestCliStart.orig_habtrack
+        cli.cli_start.manual = TestCliStart.orig_manual

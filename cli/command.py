@@ -80,6 +80,9 @@ class Command:
         if not hasattr(self, args.sub_command): self._parser_error()
 
         getattr(self, args.sub_command)()
+    
+    def help(self):
+        self._parser_error()
 
     def _parser_error(self, *args):
         data_dct = {"cli.command":cli.cli_data.info_command,
@@ -87,10 +90,11 @@ class Command:
         "cli.com_analyse":cli.cli_data.info_analyse,
         "cli.com_storage":cli.cli_data.info_storage}
         e_len = 5
-        e_mes = f"{'='*e_len} - Warning - {'='*e_len}"
+        e_mes = f"{'='*e_len} - help - {'='*e_len}"
         print(f"\n{e_mes}")
-        print("that hasnt worked, sorry. Try as subcommand:")
+        print("Try as subcommand:")
         print(data_dct[self.__module__])
+        print("or try 'python habtrack.py man' for a short semi-interactive manual")
         print(f"{e_mes}\n")
         exit(1)
 
@@ -103,7 +107,6 @@ class Command:
         ===== Returns =====
         vars(args) : dict
             the dictionary containing the arguments 
-            TODO REFACTORING the vars call is not neccessary
         """
 
         parser = argparse.ArgumentParser()
@@ -144,7 +147,7 @@ class Command:
         Command._get_success_out:
             helper method to standardize the ui response
         """
-        print(f"DONE, '{arg_substantiv}' is {arg_verb}")
+        print(f"\nDONE, '{arg_substantiv}' is {arg_verb}\n")
 
     def _get_missing_out(self, arg_dct, *args) -> None:
         """

@@ -86,7 +86,7 @@ class TestCommand(unittest.TestCase):
         """test for the correct print call"""
         with patch("builtins.print") as patch_print:
             cli.command.Command(False)._get_success_out("patch", "called")
-        patch_print.assert_called_with("DONE, 'patch' is called")
+        patch_print.assert_called_with("\nDONE, 'patch' is called\n")
 
 
     # ===== _get_missing_out ===== #
@@ -97,7 +97,6 @@ class TestCommand(unittest.TestCase):
                 cli.command.Command(False)._get_missing_out({"-n":None}, "-n")
                 # {sub_command}, {args} 
         patch_print.assert_called_with("ERROR!!!\nto perform __str__ the arguments ('-n',) are needed!\nExiting . . .")
-
 
 
     @classmethod

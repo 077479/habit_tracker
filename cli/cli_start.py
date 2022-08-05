@@ -22,7 +22,7 @@ created and tested with "pytest 7.1.2" and "Python 3.10.5
 # ========== - import - ========== #
 import argparse, sys, pathlib
 import habtrack
-from cli import com_analyse, com_mngt, com_storage, cli_data
+from cli import com_analyse, com_mngt, com_storage, cli_data, manual
 
 
 # ========== - logic - ========== #
@@ -82,14 +82,13 @@ class CliStart:
         args = parser.parse_args(sys.argv[1:2])        
         if not hasattr(self, args.command): self.parser_error()
 
-        self.test_first_time()
         getattr(self, args.command)()
 
     def test_first_time(self):
         """get the first time user message out"""
         with open(pathlib.Path(__file__).parents[1] / "data/habtrack.json", "r") as file:
             hab_js = file.readlines()
-        if len(hab_js) < 5:
+        if len(hab_js) < 5 and not self.demo:
             e_len = 5
             e_mes = f"{'='*e_len} - no data detected - {'='*e_len}"
             print(f"\n{e_mes}")
@@ -98,32 +97,36 @@ class CliStart:
 
     def parser_error(self, *args):
         e_len = 5
-        e_mes = f"{'='*e_len} - Warning - {'='*e_len}"
+        e_mes = f"{'='*e_len} - help - {'='*e_len}"
         print(f"\n{e_mes}")
-        print("that hasnt worked, sorry. Try as subcommand:")
+        print("Try as subcommand:")
         print(cli_data.info_command)
-        print()
-        print("or try 'python habtrack.py man' for a short interactive manual")
-        print()
+        print("  or try 'python habtrack.py man' for a short semi-interactive manual")
         print(f"{e_mes}\n")
         exit(1)
+    
+    def help(self):
+        self.parser_error()
 
     def mngt(self):
         """
         Command.mngt: just initiates the management functionality object
         """
+        self.test_first_time()
         com_mngt.Mngt(self.demo)
 
     def analyse(self):
         """
         Command.analyse: just initiates the analyse functionality object
         """
+        self.test_first_time()
         com_analyse.Analyse(self.demo)
     
     def storage(self):
         """
         Command.storage: just initiates the storage functionality object
         """
+        self.test_first_time()
         com_storage.Storage(self.demo)
     
     def list_habits(self):
@@ -140,11 +143,15 @@ class CliStart:
         """
         Command.demo_default: creates/resets the sammple data
         """
-        with open((pathlib.Path(__file__).parent / "data/sample.json"), "w") as file:
+        with open((pathlib.Path(__file__).parents[1] / "data/sample.json"), "w") as file:
                 file.write(cli_data.sample)
+        print("\nDone, demo data is reseted to origin\n")
+
+    def reference(self):
+        print(cli_data.reference)
     
     def man(self):
         """
         Command.man: shows the manual of the tool
         """
-        print(cli_data.man)
+        manual.run()
