@@ -62,25 +62,27 @@ class CliStart:
         calls the first argument that was given
         checks direct for the "demo flag" and removes the argument
         """
+
+        # ========== - Parser - ========== #
         parser = argparse.ArgumentParser(
             description="the cli interface for the habit tracker tool habtrack",
             usage="python habtrack.py [command] [subcommand] [arguments]",
             epilog="for the complete manual use 'python habtrack.py man'"
         )
-
         parser.add_argument("command", help=f"{[str(i) for i in dir(self) if not i.startswith('_')]}")
+        parser.error = self.parser_error
 
-        # TODO REFACTORING change this to an argument with defaul val
-
+        # ========== - demo flag - ========== #
         self.demo = False
         if "--demo" in sys.argv:
             self.demo = True
             sys.argv.remove("--demo")
 
-        args = parser.parse_args(sys.argv[1:2])
-        
-        self.test_first_time()
+        # ========== - functionality - ========== #
+        args = parser.parse_args(sys.argv[1:2])        
+        if not hasattr(self, args.command): self.parser_error()
 
+        self.test_first_time()
         getattr(self, args.command)()
 
     def test_first_time(self):
@@ -88,7 +90,23 @@ class CliStart:
         with open(pathlib.Path(__file__).parents[1] / "data/habtrack.json", "r") as file:
             hab_js = file.readlines()
         if len(hab_js) < 5:
-            print("there seems to be no data stored, is this your first time with this tool?\nif so you should run 'python habtrack.py man'")
+            e_len = 5
+            e_mes = f"{'='*e_len} - no data detected - {'='*e_len}"
+            print(f"\n{e_mes}")
+            print("there seems to be no data stored, is this your first time using this tool?\nif so you should run 'python habtrack.py man' for a brief manual")
+            print(f"{e_mes}\n")
+
+    def parser_error(self, *args):
+        e_len = 5
+        e_mes = f"{'='*e_len} - Warning - {'='*e_len}"
+        print(f"\n{e_mes}")
+        print("that hasnt worked, sorry. Try as subcommand:")
+        print(cli_data.info_command)
+        print()
+        print("or try 'python habtrack.py man' for a short interactive manual")
+        print()
+        print(f"{e_mes}\n")
+        exit(1)
 
     def mngt(self):
         """

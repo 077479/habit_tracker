@@ -214,3 +214,25 @@ lets try something out:
         >>> DONE, 'pay_rent' is checked for today
         - puh that should do it for this month
 """
+
+info_command="""  - mngt: gives accesses to the management category of the functionality
+  - analyse: gives accesses to the analyse category of the functionality
+  - storage: gives accesses to the storage category of the functionality
+  - list_habits: just shows all currently stored habits
+  - demo_default: resets the demo data
+  - man: starts a short interactive manual"""
+
+info_mngt = """  - create: creates a new habit (needs the args "-n" and the "-p" as mandatory info)
+  - check_off: marks a habit as done for one day (needs the arg "-n" as mandatory info)
+  - change_period: changes teh period of a given habit (needs the args "-n" and the "-p" as mandatory info)
+  - delete_habit: deletes a habit without warning"""
+
+info_analyse="""  - get_streaks: shows all streaks of a habit (needs the arg "-n")
+  - get_longest_streak: shows the longest streak of a provided habit (needs the arg "-n")
+  - get_habity_by_period: shows all habits stored with the given periodicity (needs "-p")
+  - is_broken: shows if the given habit was fullfilled the last time period (needs "-n")
+  - get_longest_streak_of_habits: shows teh habit with the longest streak of all of all stored
+  - list_checkoffs: shows all the dates of checkoffs for a given habit (needs the arg "-n")
+  - list_habits: shows all habits stored (same as 'python habtrack.py man')"""
+
+info_storage="""  - serialize: exports a given habit as json (needs the arg "-n")"""

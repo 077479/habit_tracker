@@ -30,7 +30,7 @@ class TestCommand(unittest.TestCase):
         cli.command.habtrack.storage.serialize.return_value = "storage"
 
 
-
+    # ===== init ===== #
     def test_class_init_type(self):
         """test if the class is instantiable without error"""
         assert type(cli.command.Command(False)) == cli.command.Command
@@ -82,7 +82,6 @@ class TestCommand(unittest.TestCase):
 
 
     # ===== _get_success_out ===== #
-
     def test_get_success_out_content(self):
         """test for the correct print call"""
         with patch("builtins.print") as patch_print:
@@ -98,15 +97,6 @@ class TestCommand(unittest.TestCase):
                 cli.command.Command(False)._get_missing_out({"-n":None}, "-n")
                 # {sub_command}, {args} 
         patch_print.assert_called_with("ERROR!!!\nto perform __str__ the arguments ('-n',) are needed!\nExiting . . .")
-
-
-    # ===== _get_wrong_sub_out ===== #
-    def test_get_wrong_sub_out_content(self):
-        """test for the correct amount of print calls"""
-        with patch("builtins.print") as patch_print:
-            with pytest.raises(SystemExit):
-                cli.command.Command(False)._get_wrong_sub_out()
-        assert patch_print.call_count == 2
 
 
 

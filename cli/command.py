@@ -18,7 +18,7 @@ created and tested with "pytest 7.1.2" and "Python 3.10.5
 
 # ========== - import - ========== #
 import argparse, sys
-import habtrack
+import habtrack, cli
 
 
 # ========== - logic - ========== #
@@ -60,6 +60,8 @@ class Command:
         """
         self._demo = demo
 
+        # print(self.__module__)
+
         parser = argparse.ArgumentParser(
             usage=f"python habtrack.py [mngt, analyse, storage, list_habits] [sub-command]",
             description=f"the CLI command '{type(self).__name__}' of the habit tracker tool habtrack"
@@ -69,16 +71,28 @@ class Command:
             metavar=f"{type(self).__name__}",
             help=f"wrong command: {[str(i) for i in dir(self) if not i.startswith('_')]}"
             )
-        
+        parser.error=self._parser_error
         args = parser.parse_args(sys.argv[2:3])
 
         self._sub_command = args.sub_command
         self._get_habits()
-        
-        if not hasattr(self, args.sub_command) or getattr(self, args.sub_command)=="":
-            self._get_wrong_sub_out()
+
+        if not hasattr(self, args.sub_command): self._parser_error()
 
         getattr(self, args.sub_command)()
+
+    def _parser_error(self, *args):
+        data_dct = {"cli.command":cli.cli_data.info_command,
+        "cli.com_mngt":cli.cli_data.info_mngt,
+        "cli.com_analyse":cli.cli_data.info_analyse,
+        "cli.com_storage":cli.cli_data.info_storage}
+        e_len = 5
+        e_mes = f"{'='*e_len} - Warning - {'='*e_len}"
+        print(f"\n{e_mes}")
+        print("that hasnt worked, sorry. Try as subcommand:")
+        print(data_dct[self.__module__])
+        print(f"{e_mes}\n")
+        exit(1)
 
     def _get_args(self) -> dict:
         """
@@ -142,13 +156,3 @@ class Command:
             if not arg_dct[arg]:
                 print(f"ERROR!!!\nto perform {self._sub_command} the arguments {args} are needed!\nExiting . . .")
                 exit()
-    
-    def _get_wrong_sub_out(self) -> None:
-        """
-        Command._get_wrong_sub_out:
-            helper method to respond to a wrong sub-command given
-        """
-        print(f"\nERROR!!!\n\n{type(self).__name__.upper()} has no {self._sub_command.upper()} use one of the following:\n")
-        [print(i) for i in dir(self) if not i.startswith('_')]
-        print("\nExiting . . .\n")
-        exit()
