@@ -1,3 +1,18 @@
+"""
+module test_com_mngt: the test module for the module cli.com_mngt
+
+===== Imports =====
+built-in:
+    unittest.mock.patch
+    unittest.mock.Mock
+    unittest
+package-intern:
+    cli
+
+===== Classes =====
+TestMngt(unittest.TestCase):
+    the test class for the module cli.com_mngt
+"""
 # ========== - import - ========== #
 from unittest.mock import patch, Mock
 import cli, unittest
@@ -6,6 +21,7 @@ import cli, unittest
 # ========== - logic - ========== #
 class TestMngt(unittest.TestCase):
 
+    # ===== setup / teardown ===== #
     @classmethod
     def setUpClass(cls):    
         """setup the test environment"""
@@ -27,6 +43,13 @@ class TestMngt(unittest.TestCase):
         cli.com_mngt.habtrack.main.create_habit.return_value = "create"
         cli.com_mngt.habtrack.main.check_off.return_value = "check_off"
         cli.com_mngt.habtrack.main.change_period.return_value = "change_period"
+    
+    @classmethod
+    def tearDownClass(cls):
+        """teardown the mocks"""
+        cli.command.sys = TestMngt.orig_sys
+        cli.command.habtrack.storage = TestMngt.orig_habtrack_storage
+        cli.com_mngt.habtrack = TestMngt.orig_habtrack
 
 
     # ===== init ===== #
@@ -62,14 +85,3 @@ class TestMngt(unittest.TestCase):
         test_obj = cli.com_mngt.Mngt(False)
         test_obj.delete_habit()
         assert len(test_obj._habits) == 0
-
-    @classmethod
-    def tearDownClass(cls):
-        """teardown the mocks"""
-        cli.command.sys = TestMngt.orig_sys
-        cli.command.habtrack.storage = TestMngt.orig_habtrack_storage
-        cli.com_mngt.habtrack = TestMngt.orig_habtrack
-
-
-
-        

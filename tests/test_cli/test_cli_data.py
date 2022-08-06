@@ -1,33 +1,69 @@
+"""
+module test_cli_data: test file for the cli_data module
+
+===== Imports =====
+package-intern:
+    cli
+"""
+
 # ========== - import - ========== #
-import pytest, cli
+import cli
 
 # ========== - logic - ========== #
 # ===== - sample - ===== #
 def test_sample():
-    """test for the type"""
+    """
+    test_sample:
+        test for the type
+    """
+
     assert type(cli.cli_data.sample) == str
 
 # ===== - man - ===== #
 def test_man():
-    """test for the type"""
+    """
+    test_man:
+        test for the type
+    """
+
     assert type(cli.cli_data.man) == list
 
 def test_info_command():
-    """test for the type"""
+    """
+    test_info_command:
+        test for the type
+    """
+    
     assert type(cli.cli_data.info_command) == str
 
 def test_mngt():
-    """test for the type"""
+    """
+    test_mngt:
+        test for the type
+    """
+
     assert type(cli.cli_data.info_mngt) == str
 
 def test_analyse():
-    """test for the type"""
+    """
+    test_analyse:
+        test for the type
+    """
+
     assert type(cli.cli_data.info_analyse) == str
 
 def test_storage():
-    """test for the type"""
+    """
+    test_storage:
+        test for the type
+    """
+    
     assert type(cli.cli_data.info_storage) == str
 
 def test_reference():
-    """test for the type"""
+    """
+    test_reference:
+        test for the type
+    """
+
     assert type(cli.cli_data.reference) == str

@@ -1,7 +1,24 @@
+"""
+module test_com_storage: the test module for the module cli.com_storage
+
+===== Imports =====
+built-in:
+    unittest.mock.patch
+    unittest.mock.Mock
+package-intern:
+    cli
+
+===== Globals =====
+orig_argv : list
+    is a reference to cli.command.sys.argv, to restore if needed
+fake_argv : list
+    the mock of sys.argv
+fake_hab : unittest.mock.Mock
+    a mock of a habit-obj
+"""
 # ========== - import - ========== #
 from unittest.mock import patch, Mock
 import cli
-
 
 
 # ========== - logic - ========== #

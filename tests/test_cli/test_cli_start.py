@@ -1,10 +1,27 @@
+"""
+module the test module for the module cli_start
+
+===== Imports =====
+built-in:
+    unittest.mock.patch
+    unittest.mock.Mock
+    unittest
+package-intern:
+    cli
+
+===== Classes =====
+TestCliStart(unittest.TestCase):
+    the test class for the module cli_start
+"""
 # ========== - import - ========== #
 from unittest.mock import Mock, patch
-import pytest, unittest, cli
+import unittest, cli
+
 
 # ========== - logic - ========== #
 class TestCliStart(unittest.TestCase):
 
+    # ===== - setup / teardown - ===== #
     @classmethod
     def setUpClass(cls):
         """setup the test environment"""
@@ -25,6 +42,16 @@ class TestCliStart(unittest.TestCase):
 
         cli.cli_start.habtrack = Mock()
 
+    @classmethod
+    def tearDownClass(cls):
+        """teardown the mocks"""
+        cli.cli_start.sys = TestCliStart.orig_sys
+        cli.cli_start.com_analyse = TestCliStart.orig_analyse
+        cli.cli_start.com_storage = TestCliStart.orig_storage
+        cli.cli_start.com_mngt = TestCliStart.orig_mngt
+        cli.cli_start.cli_data = TestCliStart.orig_data
+        cli.cli_start.habtrack = TestCliStart.orig_habtrack
+        cli.cli_start.manual = TestCliStart.orig_manual
 
 
     # ===== - init - ===== #
@@ -38,12 +65,14 @@ class TestCliStart(unittest.TestCase):
         """test initial val"""
         assert cli.cli_start.CliStart().demo == True
 
+
     # ===== - mngt - ===== #
     @patch.object(cli.cli_start.sys, "argv", ["", "mngt"])
     def test_mngt_call(self):
         """test correct call"""
         cli.cli_start.CliStart()
         cli.cli_start.com_mngt.Mngt.assert_called_with(False)
+
 
     # ===== - analyse - ===== #
     @patch.object(cli.cli_start.sys, "argv", ["", "analyse"])
@@ -52,6 +81,7 @@ class TestCliStart(unittest.TestCase):
         cli.cli_start.CliStart()
         cli.cli_start.com_analyse.Analyse.assert_called_with(False)
 
+
     # ===== - storage - ===== #
     @patch.object(cli.cli_start.sys, "argv", ["", "storage"])
     def test_storage_call(self):
@@ -59,12 +89,14 @@ class TestCliStart(unittest.TestCase):
         cli.cli_start.CliStart()
         cli.cli_start.com_storage.Storage.assert_called_with(False)
 
+
     # ===== - list_habits - ===== #
     @patch.object(cli.cli_start.sys, "argv", ["", "--demo", "storage"])
     def test_list_habits_call_demo(self):
         """test correct call"""
         cli.cli_start.CliStart().list_habits()
         cli.cli_start.habtrack.storage.deserialize.assert_called_with(file_source="sample")
+
 
     # ===== - demo_default - ===== #
     @patch.object(cli.cli_start.sys, "argv", ["", "storage"])
@@ -74,21 +106,10 @@ class TestCliStart(unittest.TestCase):
             cli.cli_start.CliStart().demo_default()
         patch_open.assert_called()
 
+
     # ===== - man - ===== #
     @patch.object(cli.cli_start.sys, "argv", ["", "storage"])
     def test_man_print(self):
         """test correct print input"""
         cli.cli_start.CliStart().man()
         cli.cli_start.manual.run.assert_called()
-        
-
-    @classmethod
-    def tearDownClass(cls):
-        """teardown the mocks"""
-        cli.cli_start.sys = TestCliStart.orig_sys
-        cli.cli_start.com_analyse = TestCliStart.orig_analyse
-        cli.cli_start.com_storage = TestCliStart.orig_storage
-        cli.cli_start.com_mngt = TestCliStart.orig_mngt
-        cli.cli_start.cli_data = TestCliStart.orig_data
-        cli.cli_start.habtrack = TestCliStart.orig_habtrack
-        cli.cli_start.manual = TestCliStart.orig_manual

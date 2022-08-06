@@ -1,3 +1,18 @@
+"""
+module test_com_analyse: the test module for the module cli.com_analyse
+
+===== Imports =====
+built-in:
+    unittest.mock.patch
+    unittest.mock.Mock
+    unittest
+package-intern:
+    cli
+
+===== Classes =====
+TestAnalyse(unittest.TestCase):
+    the test class for the module cli.com_analyse
+"""
 # ========== - import - ========== #
 import cli, unittest
 from unittest.mock import Mock, patch
@@ -6,6 +21,7 @@ from unittest.mock import Mock, patch
 # ===== init ===== #
 class TestAnalyse(unittest.TestCase):
 
+    # ===== setup / teardown ===== #
     @classmethod
     def setUpClass(cls):
         """setup the test environment"""
@@ -31,6 +47,13 @@ class TestAnalyse(unittest.TestCase):
         cli.com_analyse.habtrack.analyse.is_broken.return_value = "is_broken"
         cli.com_analyse.habtrack.analyse.get_longest_streak_of_habits.return_value = ("hab_name", "longest_of_all")
         cli.com_analyse.habtrack.analyse.list_checkoffs.return_value = "list_checkoffs"
+
+    @classmethod
+    def tearDownClass(cls):
+        """teardown the mocks"""
+        cli.com_analyse.habtrack = TestAnalyse.orig_habtrack
+        cli.command.sys = TestAnalyse.orig_sys
+        cli.command.habtrack.storage = TestAnalyse.orig_habtrack_storage
         
 
     # ===== init ===== #
@@ -92,11 +115,3 @@ class TestAnalyse(unittest.TestCase):
         with patch("builtins.print") as patch_print:
             cli.com_analyse.Analyse(False).list_habits()
         patch_print.assert_called()
-    
-
-    @classmethod
-    def tearDownClass(cls):
-        """teardown the mocks"""
-        cli.com_analyse.habtrack = TestAnalyse.orig_habtrack
-        cli.command.sys = TestAnalyse.orig_sys
-        cli.command.habtrack.storage = TestAnalyse.orig_habtrack_storage

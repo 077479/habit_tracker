@@ -1,18 +1,28 @@
+"""
+module test_command: the test module for the module cli_command
+
+===== Imports =====
+built-in:
+    unittest.mock.patch
+    unittest.mock.Mock
+    unittest
+    pytest
+package-intern:
+    cli
+
+===== Classes =====
+TestTestCommand(unittest.TestCase):
+    the test class for the module cli_command
+"""
 # ========== - import - ========== #
 from unittest.mock import patch, Mock
 import pytest, cli, unittest
 
 
 # ========== - logic - ========== #
-orig_argv = cli.command.sys.argv
-fake_argv = ["", "", "__str__", "-n=test"]
-fake_hab = Mock()
-fake_hab.name = "fake_hab"
-
-
-# ===== init ===== #
 class TestCommand(unittest.TestCase):
     
+    # ===== setup / teardown ===== #
     @classmethod
     def setUpClass(cls):
         """setup the test environment"""
@@ -28,6 +38,12 @@ class TestCommand(unittest.TestCase):
         cli.command.habtrack.storage = Mock()
         cli.command.habtrack.storage.deserialize.return_value = [TestCommand.fake_hab]
         cli.command.habtrack.storage.serialize.return_value = "storage"
+
+    @classmethod
+    def tearDownClass(cls):
+        """reset the mocks to origin"""
+        cli.command.sys = TestCommand.orig_sys
+        cli.command.habtrack.storage = TestCommand.orig_habtrack_storage
 
 
     # ===== init ===== #
@@ -97,10 +113,3 @@ class TestCommand(unittest.TestCase):
                 cli.command.Command(False)._get_missing_out({"-n":None}, "-n")
                 # {sub_command}, {args} 
         patch_print.assert_called_with("ERROR!!!\nto perform __str__ the arguments ('-n',) are needed!\nExiting . . .")
-
-
-    @classmethod
-    def tearDownClass(cls):
-        """reset the mocks to origin"""
-        cli.command.sys = TestCommand.orig_sys
-        cli.command.habtrack.storage = TestCommand.orig_habtrack_storage

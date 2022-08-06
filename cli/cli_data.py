@@ -8,7 +8,7 @@ sample : str
 man : str
     the manual for the tool
 """
-info_command="""  - mngt:         gives accesses to the management category of the functionality
+info_command=r"""  - mngt:         gives accesses to the management category of the functionality
   - analyse:      gives accesses to the analyse category of the functionality
   - storage:      gives accesses to the storage category of the functionality
   - list_habits:  just shows all currently stored habits
@@ -16,12 +16,12 @@ info_command="""  - mngt:         gives accesses to the management category of t
   - reference:    shows a complete summary of commands, subcommands and options
   - man:          starts a short semi-interactive manual"""
 
-info_mngt = """  - create:        creates a new habit (needs the args "-n" and the "-p" as mandatory info)
+info_mngt=r"""  - create:        creates a new habit (needs the args "-n" and the "-p" as mandatory info)
   - check_off:     marks a habit as done for one day (needs the arg "-n" as mandatory info)
   - change_period: changes teh period of a given habit (needs the args "-n" and the "-p" as mandatory info)
   - delete_habit:  deletes a habit without warning"""
 
-info_analyse="""  - get_streaks:                  shows all streaks of a habit (needs the arg "-n")
+info_analyse=r"""  - get_streaks:                  shows all streaks of a habit (needs the arg "-n")
   - get_longest_streak:           shows the longest streak of a provided habit (needs the arg "-n")
   - get_habity_by_period:         shows all habits stored with the given periodicity (needs "-p")
   - is_broken:                    shows if the given habit was fullfilled the last time period (needs "-n")
@@ -29,9 +29,9 @@ info_analyse="""  - get_streaks:                  shows all streaks of a habit (
   - list_checkoffs:               shows all the dates of checkoffs for a given habit (needs the arg "-n")
   - list_habits:                  shows all habits stored (same as 'python habtrack.py man')"""
 
-info_storage="""  - serialize: exports a given habit as json (needs the arg "-n")"""
+info_storage=r"""  - serialize: exports a given habit as json (needs the arg "-n")"""
 
-sample = """[
+sample=r"""[
         {
             "_HABIT":true,
             "name":"work",
@@ -142,8 +142,8 @@ sample = """[
         }
     ]"""
 
-man = [
-("""Hello, this is the manual of the habit tracking tool called habtrack
+man=[
+(r"""Hello, this is the manual of the habit tracking tool called habtrack
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
     \_\      | Hello iam Habclap,        |
    (_**)     | i will guide you through  |
@@ -152,7 +152,7 @@ man = [
  || | | |    |iam glad that you are here!|
  || | |()__/ |_ _ _ _ _ _ _ _ _ _ _  _ _ |     
  /\(___)
-_-"\"\"\"\"\"\"-_
+_-"'"'"'"'-_
 -,,,,,,,,- 
 
 this manual is designed as semi-interactive experience
@@ -164,7 +164,7 @@ that gives a short description of what which command does
 to access the help: "python habtrack.py help" or "python habtrack.py [command] help"
 """, False),
 
-("""the developer - just one guy who randomly learned to python and now calls himself 
+(r"""the developer - just one guy who randomly learned to python and now calls himself 
     that but who am i to decide (; - of this tool has decieded to split up the 
     functionality into commands and subcommands
 
@@ -178,7 +178,7 @@ to access the help: "python habtrack.py help" or "python habtrack.py [command] h
     "python habtrack.py [demo flag (optional)] [command] [sub-command] [options]"
 """, False),
 
-("""
+(r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     \_\      | lets go through it together   |
    (_**)     |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
@@ -218,18 +218,18 @@ to access the help: "python habtrack.py help" or "python habtrack.py [command] h
 
 """, "python habtrack.py help"),
 
-("""              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+(r"""              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     \_\      | hmmh seems obvious, but what    |
-   (_**)     | if i want to know the subcommand|
+   (_**)     | if i want to know a subcommand  |
   __) #_     | of, lets see . . . "analyse"    |
              | lets try this!                  |
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 """, "python habtrack.py analyse help"),
 
-("""              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+(r"""              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     \_\      | at least it is discriptive, |
    (_**)     | even if the names arent as  |
-  __) #_     | good as descriptive         |
+  __) #_     | good as they are descriptive|
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 
 but lets step back here and lets talk about
@@ -249,15 +249,15 @@ but fear not, there are only 4
   - [a(mount)] => the amount a habit has to be done within its "period" to represent one time, twice, and so on
 """, False),
 
-("""              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    \_\      | but lets be honest here, you are|
-   (_**)     | probably thinking "i will never |
-  __) #_     | remember all the commands, sub- |
+(r"""              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+             | but lets be honest here, you are|
+             | probably thinking "i will never |
+             | remember all the commands, sub- |
              | commands and options            |
-             |                                 |
-             | the developer told me that      |
-             | he was struggling  with the     |
-             | cli design                      |
+    \_\      |                                 |
+   (_**)     | the developer told me that      |
+  __) #_     | he was struggling  with the     |
+             | cli design too                  |
              |                                 |
              | and has provided a harwired     |
              | reference                       |
@@ -270,7 +270,7 @@ during the PyCon 2017]
 [so lets try it out]:
 """, "python habtrack.py reference"),
 
-("""
+(r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     \_\      | nice now that we knew the gist of it  |
    (_**)     | lets test the workflow, with the above|
@@ -283,7 +283,7 @@ the "demo_default" command]
 
 """, "python habtrack.py demo_default"),
 
-("""
+(r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     \_\      | ha we get the response that its done  |
    (_**)     |                                       |
@@ -292,11 +292,12 @@ the "demo_default" command]
              | project-root/data/sample.json         |
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 
-[lets take a look at the sample data (i refuse to say the de#"-*ode) phrase one more time
-but besides that lets make the call]
+[lets take a look at the sample data 
+(and here we go again demo, demo, demo demo demo demr dfeom . . .)
+let us just make the call and dont talk about demo related things again]
 """, "python habtrack.py --demo list_habits"),
 
-("""
+(r"""
 lets take one and look closer to it
 
 [Habit: vacuum_clean | 2000-01-01 | weekly | amount: 3]
@@ -308,11 +309,11 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
 (much words to say "vacuum_clean the apartment 3 times a week")
 """, False),
 
-("""
+(r"""
 [lets check if something was done lately]
 """, "python habtrack.py --demo analyse is_broken -n=pay_rent"),
 
-("""
+(r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     \_\      | oh . . .                      |
    (_**)     |                               |
@@ -322,7 +323,7 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 """, "python habtrack.py --demo analyse list_checkoffs -n=pay_rent"),
 
-("""
+(r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     \_\      | oh no                         |
    (_**)     |                               |
@@ -333,11 +334,12 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 """, "python habtrack.py --demo mngt check_off -n=pay_rent"),
 
-("""
+(r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    \_\      | that should buy us a month    |
-   (_**)     | worth of time                 |
-  __) #_     |                               |
+    \_\      | puh                           |
+   (_**)     | that should buy us a month    |
+  __) #_     | a month woth of time          |
+             |                               |
              | But enough with this demo work|
              |                               |
              | lets do something new         |
@@ -346,7 +348,7 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 """, 'python habtrack.py mngt create -n=piano_lessons -p=weekly -d="i want to be elton john" -a=76'),
 
-("""
+(r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     \_\      | now i will tend to my piano lessons |
    (_**)     | i have a lot to do                  |
@@ -359,7 +361,7 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 """, False)]
 
-reference="""
+reference=r"""
 - [command]: 
     With Subcommands:
         - [mngt] - access the "management" functionality for the tool
@@ -368,6 +370,7 @@ reference="""
     Without Subcommands:
         - [list_habits] - convinience call to list all stored habits
         - [demo_default] - restores the default sample habits for the "demo mode" (resets the demo mode)
+        - [reference] - shows a summarization of the tool
         - [man] - this screen
     e.g. 1 : python habtrack.py mngt create -n="make Tea" -p="daily"
     e.g. 2 : python habtrack.py analyse get_streaks -n="make Tea"
