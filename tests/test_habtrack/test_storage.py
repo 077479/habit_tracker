@@ -76,7 +76,7 @@ class TestStorage(unittest.TestCase):
     def test_serialize_single_file_creation(self):
         """test for the right state after call"""
         habtrack.storage.serialize(self.habit_obj)
-        assert (pathlib.Path(__file__).parents[2] / "data/test_habit.json").exists()
+        assert (pathlib.Path(__file__).parents[2] / "habtrack/data/test_habit.json").exists()
 
     def test_serialize_single_file_content(self):
         """test for the right state of file after call"""
@@ -93,7 +93,7 @@ class TestStorage(unittest.TestCase):
 
         habtrack.storage.serialize(self.habit_obj)
         
-        with open (pathlib.Path(__file__).parents[2] / "data/test_habit.json", "r") as file:
+        with open (pathlib.Path(__file__).parents[2] / "habtrack/data/test_habit.json", "r") as file:
             file_lines = file.readlines()
 
         for i in range(len(file_lines)):
@@ -102,7 +102,7 @@ class TestStorage(unittest.TestCase):
     def test_serialize_collection_file_creation(self):
         """test for the right state of file after call"""
         habtrack.storage.serialize([self.habit_obj])
-        assert (pathlib.Path(__file__).parents[2] / "data/habtrack.json").exists()
+        assert (pathlib.Path(__file__).parents[2] / "habtrack/data/habtrack.json").exists()
 
     def test_serialize_collection_file_content(self):
         """test for the right state of file after call"""
@@ -120,7 +120,7 @@ class TestStorage(unittest.TestCase):
 
         habtrack.storage.serialize([self.habit_obj])
 
-        with open (pathlib.Path(__file__).parents[2] / "data/habtrack.json", "r") as file:
+        with open (pathlib.Path(__file__).parents[2] / "habtrack/data/habtrack.json", "r") as file:
             file_lines = file.readlines()
 
         for i in range(len(file_lines)):

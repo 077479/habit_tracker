@@ -1,12 +1,14 @@
 import sys, pathlib
-sys.path.insert(0, str(pathlib.Path(__file__).parents[1]))
+sys.path.insert(0, str(pathlib.Path(__file__).parents[1] / "habtrack"))
 
 # ========== - import - ========== #
 from habtrack import habit, storage
 import cli
-import pytest, datetime, pathlib
+import datetime, pathlib
 
 # ========== - logic - ========== #
+hab_dir = pathlib.Path(__file__).parents[1] / "habtrack"
+
 # ===== - Fixtures - ===== #
 def habit_obj():
     """
@@ -47,11 +49,11 @@ def backup_storage():
         them from changes during funcitonal tests
     """
 
-    orig_habtrack = pathlib.Path(__file__).parents[1] / "data/habtrack.json"
-    test_habtrack = pathlib.Path(__file__).parents[1] / "data/habtrack.json.test"
+    orig_habtrack = pathlib.Path(__file__).parents[1] / "habtrack/data/habtrack.json"
+    test_habtrack = pathlib.Path(__file__).parents[1] / "habtrack/data/habtrack.json.test"
 
-    orig_sample = pathlib.Path(__file__).parents[1] / "data/sample.json"
-    test_sample = pathlib.Path(__file__).parents[1] / "data/sample.json.test"
+    orig_sample = pathlib.Path(__file__).parents[1] / "habtrack/data/sample.json"
+    test_sample = pathlib.Path(__file__).parents[1] / "habtrack/data/sample.json.test"
 
     copy_file(orig=orig_habtrack, dest=test_habtrack)
     copy_file(orig=orig_sample, dest=test_sample)
@@ -62,11 +64,11 @@ def roll_back_storage():
         function to restore teh stored data after the functional tests
     """
 
-    orig_habtrack = pathlib.Path(__file__).parents[1] / "data/habtrack.json"
-    test_habtrack = pathlib.Path(__file__).parents[1] / "data/habtrack.json.test"
+    orig_habtrack = pathlib.Path(__file__).parents[1] / "habtrack/data/habtrack.json"
+    test_habtrack = pathlib.Path(__file__).parents[1] / "habtrack/data/habtrack.json.test"
 
-    orig_sample = pathlib.Path(__file__).parents[1] / "data/sample.json"
-    test_sample = pathlib.Path(__file__).parents[1] / "data/sample.json.test"
+    orig_sample = pathlib.Path(__file__).parents[1] / "habtrack/data/sample.json"
+    test_sample = pathlib.Path(__file__).parents[1] / "habtrack/data/sample.json.test"
 
     copy_file(orig=test_habtrack, dest=orig_habtrack)
     copy_file(orig=test_sample, dest=orig_sample)
@@ -81,7 +83,7 @@ def create_samples():
     """
 
     sample = cli.cli_data.sample
-    with open((pathlib.Path(__file__).parents[1] / "data/sample.json"), "w") as file:
+    with open((pathlib.Path(__file__).parents[1] / "habtrack/data/sample.json"), "w") as file:
             file.write(sample)
 
 def copy_file(orig: pathlib.Path, dest: pathlib.Path):
@@ -111,13 +113,9 @@ def clean_habit_storage():
     clean_habit_storage:
         removes done testing entries to be ready for the next test
     """
-    if (pathlib.Path(__file__).parents[1] / "data/test_habit.json").exists():
-            (pathlib.Path(__file__).parents[1] / "data/test_habit.json").unlink()
-    if (pathlib.Path(__file__).parents[1] / "data/habtrack.json").exists():
+    if (pathlib.Path(__file__).parents[1] / "habtrack/data/test_habit.json").exists():
+            (pathlib.Path(__file__).parents[1] / "habtrack/data/test_habit.json").unlink()
+    if (pathlib.Path(__file__).parents[1] / "habtrack/data/habtrack.json").exists():
         hab_lst = storage.deserialize()
         hab_lst_clean = [hab for hab in hab_lst if not hab.name == "test_habit"]
         storage.serialize(hab_lst_clean)
-
-hab = habit.Habit(name="test_habit", periodicity="monthly", description="just here to test the modul")
-hab.creation_date = datetime.date(2000,1,1)
-print(habit_obj()==hab)

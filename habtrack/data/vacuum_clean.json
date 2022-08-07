@@ -1,0 +1,18 @@
+{
+  "_HABIT": true,
+  "name": "vacuum_clean",
+  "description": "weekly[3], Streaks[3] 5/2/1",
+  "periodicity": "weekly",
+  "amount": 3,
+  "creation_date": 730120,
+  "checkoffs": [
+    730122,
+    730124,
+    730126,
+    730128,
+    730131,
+    730142,
+    730146,
+    730156
+  ]
+}
