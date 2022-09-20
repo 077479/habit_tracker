@@ -1,11 +1,11 @@
 """
-module com_analyse: 
+module com_analyse:
     subclass of Command representing the CLI-Command analyse
     for the habit tracker tool habtrack
 
 ===== Imports =====
 package-intern:
-    habtrack
+    src.analyse
     cli.command
 
 ===== Classes =====
@@ -17,7 +17,6 @@ created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
 
 # ========== - import - ========== #
-#! import src.analyse, cli.command
 import cli.command
 from src import analyse
 
@@ -54,7 +53,7 @@ class Analyse(cli.command.Command):
     list_habits:
         lists all habits stored in the default location
     """
-    def get_streaks(self):
+    def get_streaks(self) -> None:
         """
         Analyse.get_streak:
             shows the streaks of a habit
@@ -74,7 +73,7 @@ class Analyse(cli.command.Command):
         print()
 
 
-    def get_longest_streak(self):
+    def get_longest_streak(self) -> None:
         """
         Analyse.get_longest_streak:
             shows the longest streaks of a habit
@@ -92,7 +91,7 @@ class Analyse(cli.command.Command):
         print(hab_streak)
         print()
 
-    def get_habits_by_period(self):  
+    def get_habits_by_period(self) -> None:  
         """
         Analyse.get_habits_by_period:
             shows only habits with a certain periodicity
@@ -107,7 +106,7 @@ class Analyse(cli.command.Command):
         habs = analyse.get_habits_by_period(self._get_habit_lst(), args["p"])
         print(analyse.list_habits(habs))
 
-    def is_broken(self):
+    def is_broken(self) -> None:
         """
         Analyse.is_brocen:
             shows if a habit is was fullfilled the last time-period
@@ -125,7 +124,7 @@ class Analyse(cli.command.Command):
         if result: answer = "broken"
         print(f"the Habit: '{hab.name}' is currently: {answer}")
 
-    def get_longest_streak_of_habits(self):
+    def get_longest_streak_of_habits(self) -> None:
         """
         Analyse.get_longest_streak_of_habits:
             shows the longest streaks of all stored habits
@@ -136,7 +135,7 @@ class Analyse(cli.command.Command):
         print(f"Streak:\n{streak}\n")
 
 
-    def list_checkoffs(self):
+    def list_checkoffs(self) -> None:
         """
         Analyse.list_checkoffs:
             lists all checkoffs of a given habit
@@ -151,7 +150,7 @@ class Analyse(cli.command.Command):
         print(analyse.list_checkoffs(hab))
 
 
-    def list_habits(self):
+    def list_habits(self) -> None:
         """
         Analyse.list_habits:
             lists all stored habits

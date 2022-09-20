@@ -1,30 +1,18 @@
 """
-Package habtrack:
-    the __init__ is utilized to provide clean api calls to the functionality
-    therefor methods of objects are imported that it can be accessed by
+Package src of the habtrack tool
+    provides the program logic of the tool
 
-    "habtrack.[functionality]"
-
-    but the modules are imported aswell to give access to the
-    underlying modules
-
-===== Imports in init =====
-from storage import serialize
-from storage import deserialize
-
-from main import create_habit
-from main import check_off
-from main import change_period
-from main import delete_habit
-
-from analyse import get_streaks
-from analyse import get_longest_streak
-from analyse import is_broken
-from analyse import get_habits_by_period
-from analyse import get_longest_streak_of_habits
-
-from analyse import list_habits
-from analyse import list_checkoffs
+===== Modules =====
+analyse
+    provides top level funcitons to give information about habits/habit containers
+habit
+    provides the habit class (represents the habit)
+main
+    convinience modul to provide clean api calls
+period
+    provides the period class (represents periodicity of a habit)
+storage
+    provides top level functions to store/load stored habits
 
 ===== Dependencies =====
 created and tested with "pytest 7.1.2" and "Python 3.10.5

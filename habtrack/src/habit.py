@@ -1,12 +1,12 @@
 """
 module habit:
-    res modul for the tool habit_tracker (habtrack)
+    res modul for the tool habit_tracker (habtrack) that provides the representation of a habit
 
 ===== Imports =====
 built-in:
     datetime
 package-intern:
-    habtrack.period
+    src.period
 
 ===== Classes =====
 Habit:

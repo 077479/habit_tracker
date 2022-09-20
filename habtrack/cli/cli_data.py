@@ -1,13 +1,33 @@
 """
-module cli_data: provides needed hardwired data
+module cli_data
+    provides needed hardwired data
 
 ===== Globals =====
-sample : str
-    the default sample data
+info_command : str
+    the info to the usage of the command functionality
 
-man : str
-    the manual for the tool
+info_mngt : str
+    the info to the usage of the management functionality
+
+info_analyse : str
+    the info to the usage of the analyse functionality
+
+info_storage : str
+    the info to the usage of the storage functionality
+
+sample : str
+    the default hardwired sample data
+
+man : list
+    the data for the semi interactive tool introduction
+    content is a list with touples
+    each tuple containing the printed text as [0]
+    and the programflow control data as [1]
+
+reference : str
+    the reference of the tool
 """
+
 info_command=r"""  - mngt:         gives accesses to the management category of the functionality
   - analyse:      gives accesses to the analyse category of the functionality
   - storage:      gives accesses to the storage category of the functionality
@@ -162,6 +182,7 @@ if this is too much, there is for every command category of this tool a vialble 
 that gives a short description of what which command does
 
 to access the help: "habtrack help" or "habtrack [command] help"
+
 """, False),
 
 (r"""the developer - just one guy who not that randomly learned python and now calls himself 
@@ -176,6 +197,7 @@ to access the help: "habtrack help" or "habtrack [command] help"
 
  the general usage of it is:
     "habtrack [demo flag (optional)] [command] [sub-command] [options]"
+
 """, False),
 
 (r"""
@@ -221,6 +243,7 @@ to access the help: "habtrack help" or "habtrack [command] help"
   __) #_     | of, lets see . . . "analyse"    |
              | lets try this!                  |
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
+
 """, "habtrack analyse help"),
 
 (r"""              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -244,6 +267,7 @@ but fear not, there are only 4
     - [monthly] => every month
   - [-d(escription)] => a brief description of the habit
   - [a(mount)] => the amount a habit has to be done within its "period" to represent one time, twice, and so on
+
 """, False),
 
 (r"""              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -265,6 +289,7 @@ talk of Daniele Procida (core developer of Django)
 during the PyCon 2017]
 
 [so lets try it out]:
+
 """, "habtrack reference"),
 
 (r"""
@@ -296,6 +321,7 @@ the "demo_default" command]
 [lets take a look at the sample data 
 (and here we go again demo, demo, demo demo demo demr dfeom . . .)
 let us just make the call and dont talk about demo related things again]
+
 """, "habtrack --demo list_habits"),
 
 (r"""
@@ -309,6 +335,7 @@ weekly => the periodicity of the habit
 amount: 3 => the amount of "check_offs" needed in order to be fullfilled
 
 (much words to say "vacuum_clean the apartment 3 times a week")
+
 """, False),
 
 (r"""
@@ -322,6 +349,7 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
              | lets check how many rents are |
              | due                           |
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
+
 """, "habtrack --demo analyse list_checkoffs -n=pay_rent"),
 
 (r"""
@@ -333,6 +361,7 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
              |                               |
              | lets do something about it    |
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
+
 """, "habtrack --demo mngt check_off -n=pay_rent"),
 
 (r"""
@@ -347,6 +376,7 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
              | i always wanted to take piano |
              | lessons so lets create a habit|
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
+
 """, 'habtrack mngt create -n=piano_lessons -p=weekly -d="i want to be elton john" -a=14'),
 
 (r"""
@@ -360,6 +390,7 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
              |                                     |
              | so til the next time                |
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
+
 """, False)]
 
 reference=r"""
@@ -385,7 +416,7 @@ reference=r"""
         - [create] takes (-n(ame), -p(eriod), [-d(iscription)-optional], [-a(mount)-optional]) => creates a habit and stores it
         - [check_off] takes (-n(ame)) => checks off the given habit (mark it as done one time for today)
         - [change_period] takes (-n(ame), -p(eriod)) => changes the period of the given habit
-        - [delete] takes (-n(ame)) => deletes the given habit, without warning
+        - [delete_habit] takes (-n(ame)) => deletes the given habit, without warning
 
     [analyse]:
         - [get_habits_by_period] takes (-n(ame), -p(eriod)) => returns all stored habits with the given period

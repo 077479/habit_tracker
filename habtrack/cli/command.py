@@ -6,7 +6,8 @@ built-in:
     argparse
     sys
 package-intern:
-    habtrack
+    src.storage
+    cli.cli_data
 
 ===== Classes =====
 Command:
@@ -81,7 +82,7 @@ class Command:
 
         getattr(self, args.sub_command)()
     
-    def help(self):
+    def help(self) -> None:
         self._parser_error()
 
     def _parser_error(self, *args):

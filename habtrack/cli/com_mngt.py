@@ -5,7 +5,7 @@ module mngt:
 
 ===== Imports =====
 package-intern:
-    habtrack
+    src.main
     cli.command
 
 ===== Classes =====
@@ -46,7 +46,7 @@ class Mngt(cli.command.Command):
         deletes a habit without warning
     """
     
-    def create(self):
+    def create(self) -> None:
         """
         Mngt.create:
             creates a habit and adds it to the habtrack.json file
@@ -70,7 +70,7 @@ class Mngt(cli.command.Command):
         
         self._store()
 
-    def check_off(self):
+    def check_off(self) -> None:
         """
         Mngt.check_off:
             marks a habit as one tme fullfilled for the actual day
@@ -87,7 +87,7 @@ class Mngt(cli.command.Command):
 
         self._store()
 
-    def change_period(self):
+    def change_period(self) -> None:
         """
         Mngt.change_period:
             changes teh period of a habit
@@ -100,7 +100,7 @@ class Mngt(cli.command.Command):
         self._get_success_out(args["n"], f"changed to the new periodicity: {args['p']}")
         self._store()
 
-    def delete_habit(self):
+    def delete_habit(self) -> None:
         """
         Mngt.delete_habit:
             deletes a habit from context and from the file habtrack.json

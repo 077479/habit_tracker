@@ -41,7 +41,7 @@ def get_streaks(hab : object) -> list:
 
     the workflow is
         1. set vars:
-            - a copy of the checkoffs list of the give habit (to not change the original => elements will be removed)
+            - a copy of the checkoffs list of the given habit (to not change the original => elements will be removed)
             - the "return_list" (list with list of streaks, each streak a list)
         2. set the first "time_period" with the period.Period feature
             a time period is a tuple in the form: (date_start, date_end)

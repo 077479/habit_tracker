@@ -1,12 +1,14 @@
 """
-module manual.py: this module provides a short manual where a user can learn how to use the cli
+module manual.py
+    this module provides a short manual where a user can learn how to use the cli
 
-it gets the manual (list with tuple) from cli_data
-and works thourgh it one by one,
-the first element of the tuple is the manual, the second
-provides system calls that will be run through subcommand
-to demonstrate the information provided
-
+    it saves the stored habit data in order to prevent changes during the demonstration
+    it gets the manual (list with tuple) from cli_data
+    and works thourgh it one by one,
+    the first element of the tuple is the manual, the second
+    provides system calls that will be run through subcommand
+    to demonstrate the information provided
+    it restores the stored habit data in order to prevent changes during the demonstration
 
 ===== Imports =====
 built-ins
@@ -15,7 +17,9 @@ built-ins
     time
     sys
 package-intern
-    cli
+    cli.cli_data
+    tests.conftest.backup_storage
+    tests.conftest.roll_back_storage
 
 ===== Dependencies =====
 created and tested with "pytest 7.1.2" and "Python 3.10.5
@@ -95,7 +99,7 @@ def man_gen() -> str:
     for i in cli.cli_data.man:
         yield i
 
-def run():
+def run() -> None:
     """
     run: the entry point of the semi-interactive manual
     """

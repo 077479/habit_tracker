@@ -1,18 +1,24 @@
 """
-module cli_start: starts the cli for the habit tool habtrack
+module cli_start
+    starts the cli for the habit tool habtrack
 
 ===== Imports =====
 built-ins
-    argparse
-    sys
-    pathlib
+    argparse, sys, pathlib
+
 package-intern
-    habtrack
+    src.storage
+    src.analyse
+
     cli.com_analyse
     cli.com_mngt
     cli.com_storage
     cli.cli_data.sample
     cli.cli_data.man
+
+===== Classes =====
+CliStart
+    entry point class for the cli
 """
 # ========== - import - ========== #
 import argparse, sys, pathlib
@@ -28,7 +34,6 @@ class CliStart:
 
     ===== Attributes =====
     demo : bool | represents if the CLI will run in "demo mode"
-
 
     ===== Methods =====
     mngt
@@ -49,7 +54,8 @@ class CliStart:
     man
         shows a bief manual how to use the tool with example
     """
-    def __init__(self):
+
+    def __init__(self) -> None:
         """
         entrypoint for the CLI
 
@@ -79,7 +85,7 @@ class CliStart:
 
         getattr(self, args.command)()
 
-    def test_first_time(self):
+    def test_first_time(self) -> None:
         """get the first time user message out"""
         with open(pathlib.Path(__file__).parents[1] / "data/habtrack.json", "r") as file:
             hab_js = file.readlines()
@@ -90,7 +96,7 @@ class CliStart:
             print("there seems to be no data stored, is this your first time using this tool?\nif so you should run 'python habtrack.py man' for a brief manual")
             print(f"{e_mes}\n")
 
-    def parser_error(self, *args):
+    def parser_error(self, *args) -> None:
         e_len = 5
         e_mes = f"{'='*e_len} - help - {'='*e_len}"
         print(f"\n{e_mes}")
@@ -100,31 +106,31 @@ class CliStart:
         print(f"{e_mes}\n")
         exit(1)
     
-    def help(self):
+    def help(self) -> None:
         self.parser_error()
 
-    def mngt(self):
+    def mngt(self) -> None:
         """
         Command.mngt: just initiates the management functionality object
         """
         self.test_first_time()
         cli.com_mngt.Mngt(self.demo)
 
-    def analyse(self):
+    def analyse(self) -> None:
         """
         Command.analyse: just initiates the analyse functionality object
         """
         self.test_first_time()
         cli.com_analyse.Analyse(self.demo)
     
-    def storage(self):
+    def storage(self) -> None:
         """
         Command.storage: just initiates the storage functionality object
         """
         self.test_first_time()
         cli.com_storage.Storage(self.demo)
     
-    def list_habits(self):
+    def list_habits(self) -> None:
         """
         Command.list_habits: just lists all stored habits (either sample if demo is given or regular)
         """
@@ -134,7 +140,7 @@ class CliStart:
             habs = src.storage.deserialize()
         print(src.analyse.list_habits(habs))
     
-    def demo_default(self):
+    def demo_default(self) -> None:
         """
         Command.demo_default: creates/resets the sammple data
         """
@@ -142,10 +148,10 @@ class CliStart:
                 file.write(cli.cli_data.sample)
         print("\nDone, demo data is reseted to origin\n")
 
-    def reference(self):
+    def reference(self) -> None:
         print(cli.cli_data.reference)
     
-    def man(self):
+    def man(self) -> None:
         """
         Command.man: shows the manual of the tool
         """

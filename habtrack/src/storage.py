@@ -6,7 +6,7 @@ module storage:
 built-in:
     json, datetime, pathlib
 package-intern:
-    habit
+    src.habit
 
 ===== Globals =====
 data_dir : pathlib.Path

@@ -4,7 +4,7 @@ module main:
 
 ===== Imports =====
 package-intern:
-    habit
+    src.habit
 
 ===== Functions =====
 create_habit:

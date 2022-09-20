@@ -5,7 +5,7 @@ module com_storage:
 
 ===== Imports =====
 package-intern:
-    habtrack
+    src.storage
     cli.command
 
 ===== Classes =====
@@ -40,7 +40,7 @@ class Storage(cli.command.Command):
     serialize:
         stores a specified habit in a seperate file for export
     """ 
-    def serialize(self):
+    def serialize(self) -> None:
         """
         Atorage.serialize:
             stores a specified habit in a seperate file for export
