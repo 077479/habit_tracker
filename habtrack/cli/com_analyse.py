@@ -17,11 +17,14 @@ created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
 
 # ========== - import - ========== #
-import habtrack
-from cli import command
+#! import src.analyse, cli.command
+import cli.command
+from src import analyse
+
+
 # ========== - logic - ========== #
 
-class Analyse(command.Command):
+class Analyse(cli.command.Command):
     """
     class Analyse(command.Command): 
         accesses the analyse functionality
@@ -63,7 +66,8 @@ class Analyse(command.Command):
         self._get_missing_out(args, "n")
 
         hab = self._habits[args["n"]]
-        hab_streaks = habtrack.analyse.get_streaks(hab)
+        #! hab_streaks = src.analyse.get_streaks(hab)
+        hab_streaks = analyse.get_streaks(hab)
 
         print(f"\n{hab} | Streaks:")
         [print(i) for i in hab_streaks]
@@ -81,7 +85,8 @@ class Analyse(command.Command):
         self._get_missing_out(args, "n")
 
         hab = self._habits[args["n"]]
-        hab_streak = habtrack.analyse.get_longest_streak(hab)
+        #! hab_streak = src.analyse.get_longest_streak(hab)
+        hab_streak = analyse.get_longest_streak(hab)
 
         print(f"\n{hab} | Longest Streak:")
         print(hab_streak)
@@ -97,8 +102,10 @@ class Analyse(command.Command):
         args = self._get_args()
         self._get_missing_out(args, "p")
 
-        habs = habtrack.analyse.get_habits_by_period(self._get_habit_lst(), args["p"])
-        print(habtrack.analyse.list_habits(habs))
+        #! habs = src.analyse.get_habits_by_period(self._get_habit_lst(), args["p"])
+        #! print(src.analyse.list_habits(habs))
+        habs = analyse.get_habits_by_period(self._get_habit_lst(), args["p"])
+        print(analyse.list_habits(habs))
 
     def is_broken(self):
         """
@@ -111,7 +118,8 @@ class Analyse(command.Command):
         self._get_missing_out(args, "n")
 
         hab = self._habits[args["n"]]
-        result = habtrack.analyse.is_broken(hab)
+        #! result = src.analyse.is_broken(hab)
+        result = analyse.is_broken(hab)
         answer = "unbroken"
 
         if result: answer = "broken"
@@ -122,7 +130,8 @@ class Analyse(command.Command):
         Analyse.get_longest_streak_of_habits:
             shows the longest streaks of all stored habits
         """
-        hab, streak = habtrack.analyse.get_longest_streak_of_habits(self._get_habit_lst())
+        #! hab, streak = src.analyse.get_longest_streak_of_habits(self._get_habit_lst())
+        hab, streak = analyse.get_longest_streak_of_habits(self._get_habit_lst())
         print(f"\nthe habit of the stored habits with the longest streak is:\n{hab}")
         print(f"Streak:\n{streak}\n")
 
@@ -138,11 +147,14 @@ class Analyse(command.Command):
         self._get_missing_out(args, "n")
 
         hab = self._habits[args["n"]]
-        print(habtrack.analyse.list_checkoffs(hab))
+        #! print(src.analyse.list_checkoffs(hab))
+        print(analyse.list_checkoffs(hab))
+
 
     def list_habits(self):
         """
         Analyse.list_habits:
             lists all stored habits
         """
-        print(habtrack.list_habits([self._habits[i] for i in self._habits]))
+        #! print(src.analyse.list_habits([self._habits[i] for i in self._habits]))
+        print(analyse.list_habits([self._habits[i] for i in self._habits]))

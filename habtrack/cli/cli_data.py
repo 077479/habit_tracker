@@ -164,8 +164,8 @@ that gives a short description of what which command does
 to access the help: "python habtrack.py help" or "python habtrack.py [command] help"
 """, False),
 
-(r"""the developer - just one guy who randomly learned to python and now calls himself 
-    that but who am i to decide (; - of this tool has decieded to split up the 
+(r"""the developer - just one guy who randomly learned python and now calls himself 
+    that - but who am i to decide (; - of this tool has decieded to split up the 
     functionality into commands and subcommands
 
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -256,10 +256,10 @@ but fear not, there are only 4
              | commands and options            |
     \_\      |                                 |
    (_**)     | the developer told me that      |
-  __) #_     | he was struggling  with the     |
+  __) #_     | he was struggling with the      |
              | cli design too                  |
              |                                 |
-             | and has provided a harwired     |
+             | and has provided a hardwired    |
              | reference                       |
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 
@@ -337,8 +337,8 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
 (r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     \_\      | puh                           |
-   (_**)     | that should buy us a month    |
-  __) #_     | a month woth of time          |
+   (_**)     | that should buy us            |
+  __) #_     | a month worth of time         |
              |                               |
              | But enough with this demo work|
              |                               |

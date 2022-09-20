@@ -22,7 +22,15 @@ created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
 
 import subprocess, platform, time, sys
-from cli import cli_data
+import cli.cli_data
+
+def clear_screen():
+    """clear_screen: clears the screen"""
+
+    cmd = "clear"
+    if platform.system().lower() == "windows": cmd = "cls"
+    subprocess.run(cmd, shell=True)
+
 
 def wait_key() -> None:
     """
@@ -30,7 +38,7 @@ def wait_key() -> None:
     """
 
     print()
-    if platform.system() == "windows":
+    if platform.system().lower() == "windows":
         subprocess.run("pause", shell=True)
     else:
         subprocess.run('read -p "press enter to continue ..."', shell=True)
@@ -79,7 +87,7 @@ def man_gen() -> str:
     """
     man_gen: creates the generator for the manual
     """
-    for i in cli_data.man:
+    for i in cli.cli_data.man:
         yield i
 
 def run():
@@ -87,14 +95,15 @@ def run():
     run: the entry point of the semi-interactive manual
     """
     
+    clear_screen()
     gen = man_gen()
     try:
         while True:
             elem = next(gen)
             print_slow(elem[0], 0.01)
-            if elem[1]: 
-                wait_key()
+            if elem[1]:                
                 run_shell(elem[1], 0.25)
+                wait_key()
             wait_key()            
     except (StopIteration, KeyboardInterrupt):
         pass

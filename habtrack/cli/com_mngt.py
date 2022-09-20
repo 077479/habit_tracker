@@ -17,11 +17,10 @@ created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
 
 # ========== - import - ========== #
-import habtrack
-from cli import command
+import src.main, cli.command
 
 # ========== - logic - ========== #
-class Mngt(command.Command):
+class Mngt(cli.command.Command):
     """
     class Mngt(command.Command):
         accesses the mngt functionality
@@ -63,7 +62,7 @@ class Mngt(command.Command):
             print(f"\nERROR!\nHabit: '{args['n']}' already exists\nExiting . . .\n")
             exit()
 
-        hab = habtrack.main.create_habit(name=args["n"], periodicity=args["p"], description=args["d"], amount=args["a"])
+        hab = src.main.create_habit(name=args["n"], periodicity=args["p"], description=args["d"], amount=args["a"])
 
         self._habits[args["n"]] = hab
 
@@ -82,7 +81,7 @@ class Mngt(command.Command):
         args = self._get_args()
         self._get_missing_out(args, "n")
 
-        habtrack.main.check_off(self._habits[args["n"]])
+        src.main.check_off(self._habits[args["n"]])
         
         self._get_success_out(args["n"], "checked off for today")
 
@@ -97,7 +96,7 @@ class Mngt(command.Command):
         """
         args = self._get_args()
         self._get_missing_out(args, "n", "p")
-        habtrack.main.change_period(self._habits[args["n"]], args["p"])
+        src.main.change_period(self._habits[args["n"]], args["p"])
         self._get_success_out(args["n"], f"changed to the new periodicity: {args['p']}")
         self._store()
 

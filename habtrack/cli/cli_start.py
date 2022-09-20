@@ -1,6 +1,5 @@
 """
-module cli_start: starts the cli for hte habit tool habtrack
-
+module cli_start: starts the cli for the habit tool habtrack
 
 ===== Imports =====
 built-ins
@@ -14,15 +13,11 @@ package-intern
     cli.com_storage
     cli.cli_data.sample
     cli.cli_data.man
-
-
-===== Dependencies =====
-created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
 # ========== - import - ========== #
 import argparse, sys, pathlib
-import habtrack
-from cli import com_analyse, com_mngt, com_storage, cli_data, manual
+import src.storage, src.analyse
+import cli.com_analyse, cli.com_mngt, cli.com_storage, cli.cli_data, cli.manual
 
 
 # ========== - logic - ========== #
@@ -100,7 +95,7 @@ class CliStart:
         e_mes = f"{'='*e_len} - help - {'='*e_len}"
         print(f"\n{e_mes}")
         print("Try as subcommand:")
-        print(cli_data.info_command)
+        print(cli.cli_data.info_command)
         print("  or try 'python habtrack.py man' for a short semi-interactive manual")
         print(f"{e_mes}\n")
         exit(1)
@@ -113,45 +108,45 @@ class CliStart:
         Command.mngt: just initiates the management functionality object
         """
         self.test_first_time()
-        com_mngt.Mngt(self.demo)
+        cli.com_mngt.Mngt(self.demo)
 
     def analyse(self):
         """
         Command.analyse: just initiates the analyse functionality object
         """
         self.test_first_time()
-        com_analyse.Analyse(self.demo)
+        cli.com_analyse.Analyse(self.demo)
     
     def storage(self):
         """
         Command.storage: just initiates the storage functionality object
         """
         self.test_first_time()
-        com_storage.Storage(self.demo)
+        cli.com_storage.Storage(self.demo)
     
     def list_habits(self):
         """
         Command.list_habits: just lists all stored habits (either sample if demo is given or regular)
         """
         if self.demo:
-            habs = habtrack.storage.deserialize(file_source="sample")
+            habs = src.storage.deserialize(file_source="sample")
         else:
-            habs = habtrack.storage.deserialize()
-        print(habtrack.analyse.list_habits(habs))
+            habs = src.storage.deserialize()
+        print(src.analyse.list_habits(habs))
     
     def demo_default(self):
         """
         Command.demo_default: creates/resets the sammple data
         """
         with open((pathlib.Path(__file__).parents[1] / "data/sample.json"), "w") as file:
-                file.write(cli_data.sample)
+                file.write(cli.cli_data.sample)
         print("\nDone, demo data is reseted to origin\n")
 
     def reference(self):
-        print(cli_data.reference)
+        print(cli.cli_data.reference)
     
     def man(self):
         """
         Command.man: shows the manual of the tool
         """
-        manual.run()
+        cli.manual.run()

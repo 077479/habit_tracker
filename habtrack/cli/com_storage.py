@@ -17,12 +17,11 @@ created and tested with "pytest 7.1.2" and "Python 3.10.5
 """
 
 # ========== - import - ========== #
-import habtrack
-from cli import command
+import src.storage, cli.command
 
 # ========== - logic - ========== #
 
-class Storage(command.Command):
+class Storage(cli.command.Command):
     """
     class Storage(command.Command):
         accesses the storage functionality
@@ -53,5 +52,5 @@ class Storage(command.Command):
         self._get_missing_out(args, "n")
         hab = self._habits[args["n"]]
 
-        habtrack.storage.serialize(hab)
+        src.storage.serialize(hab)
         self._get_success_out(hab.name, f"successfully stored for export as /data/{hab.name}.json")

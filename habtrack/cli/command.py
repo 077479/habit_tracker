@@ -18,7 +18,7 @@ created and tested with "pytest 7.1.2" and "Python 3.10.5
 
 # ========== - import - ========== #
 import argparse, sys
-import habtrack, cli
+import src.storage, cli.cli_data
 
 
 # ========== - logic - ========== #
@@ -125,7 +125,7 @@ class Command:
         Command._get_habits:
             helper method that loads the habits from file
         """
-        self._habits = {hab.name: hab for hab in habtrack.storage.deserialize(demo=self._demo)}
+        self._habits = {hab.name: hab for hab in src.storage.deserialize(demo=self._demo)}
     
     def _get_habit_lst(self) -> list:
         """
@@ -140,7 +140,7 @@ class Command:
         Command._store:
             helper method to save the habits to file
         """
-        habtrack.storage.serialize([self._habits[i] for i in self._habits.keys()], demo=self._demo)
+        src.storage.serialize([self._habits[i] for i in self._habits.keys()], demo=self._demo)
 
     def _get_success_out(self, arg_substantiv, arg_verb) -> None:
         """
