@@ -23,6 +23,7 @@ created and tested with "pytest 7.1.2" and "Python 3.10.5
 
 import subprocess, platform, time, sys
 import cli.cli_data
+from tests.conftest import backup_storage, roll_back_storage
 
 def clear_screen():
     """clear_screen: clears the screen"""
@@ -81,6 +82,10 @@ def run_shell(arg_str: str, speed: float) -> None:
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(speed)
+
+    print()                    
+    wait_key()
+
     subprocess.run(arg_str, shell = True)
 
 def man_gen() -> str:
@@ -94,16 +99,18 @@ def run():
     """
     run: the entry point of the semi-interactive manual
     """
-    
+    backup_storage()
+
     clear_screen()
     gen = man_gen()
     try:
         while True:
             elem = next(gen)
             print_slow(elem[0], 0.01)
-            if elem[1]:                
+            if elem[1]:
                 run_shell(elem[1], 0.25)
-                wait_key()
             wait_key()            
     except (StopIteration, KeyboardInterrupt):
         pass
+    finally:
+        roll_back_storage()

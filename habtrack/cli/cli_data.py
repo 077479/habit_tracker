@@ -27,7 +27,7 @@ info_analyse=r"""  - get_streaks:                  shows all streaks of a habit 
   - is_broken:                    shows if the given habit was fullfilled the last time period (needs "-n")
   - get_longest_streak_of_habits: shows teh habit with the longest streak of all of all stored
   - list_checkoffs:               shows all the dates of checkoffs for a given habit (needs the arg "-n")
-  - list_habits:                  shows all habits stored (same as 'python habtrack.py man')"""
+  - list_habits:                  shows all habits stored (same as 'habtrack man')"""
 
 info_storage=r"""  - serialize: exports a given habit as json (needs the arg "-n")"""
 
@@ -161,10 +161,10 @@ if you want to stop, just use "[ctl]+c" or "[ctl]+z"
 if this is too much, there is for every command category of this tool a vialble help option
 that gives a short description of what which command does
 
-to access the help: "python habtrack.py help" or "python habtrack.py [command] help"
+to access the help: "habtrack help" or "habtrack [command] help"
 """, False),
 
-(r"""the developer - just one guy who randomly learned python and now calls himself 
+(r"""the developer - just one guy who not that randomly learned python and now calls himself 
     that - but who am i to decide (; - of this tool has decieded to split up the 
     functionality into commands and subcommands
 
@@ -175,7 +175,7 @@ to access the help: "python habtrack.py help" or "python habtrack.py [command] h
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 
  the general usage of it is:
-    "python habtrack.py [demo flag (optional)] [command] [sub-command] [options]"
+    "habtrack [demo flag (optional)] [command] [sub-command] [options]"
 """, False),
 
 (r"""
@@ -184,20 +184,17 @@ to access the help: "python habtrack.py help" or "python habtrack.py [command] h
    (_**)     |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
   __) #_     
 
-    "python habtrack.py [demo flag (optional)] [command] [sub-command] [options]"
-    
-    - "python":
-        the call to the python interpreter
+    "habtrack [demo flag (optional)] [command] [sub-command] [options]"
 
-    - "habtrack.py":
+    - "habtrack":
         the 'starter' python file of the CLI for the tool
 
     - "demo flag": the tool provides a demo-mode,
         - in the "demo mode" sample data is provided to explore the abilities of the tool
         - the demo flag is optional and the demo-mode only starts when the "--demo" is provided
         - the demoflag can be given anywhere, unlike the commands and sub-commands it is not bound to a position
-        - e.g.1: python habtrack.py --demo [command] [subcommand] [options] is fine
-        - e.g.2: python habtrack.py [command] [subcommand] --demo [options] is totally fine too
+        - e.g.1: habtrack --demo [command] [subcommand] [options] is fine
+        - e.g.2: habtrack [command] [subcommand] --demo [options] is totally fine too
 
     - [command]:
         the command gives access to the categorized functionality
@@ -216,7 +213,7 @@ to access the help: "python habtrack.py help" or "python habtrack.py [command] h
   __) #_     | will do the work this time    |
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 
-""", "python habtrack.py help"),
+""", "habtrack help"),
 
 (r"""              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     \_\      | hmmh seems obvious, but what    |
@@ -224,7 +221,7 @@ to access the help: "python habtrack.py help" or "python habtrack.py [command] h
   __) #_     | of, lets see . . . "analyse"    |
              | lets try this!                  |
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
-""", "python habtrack.py analyse help"),
+""", "habtrack analyse help"),
 
 (r"""              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     \_\      | at least it is discriptive, |
@@ -268,7 +265,7 @@ talk of Daniele Procida (core developer of Django)
 during the PyCon 2017]
 
 [so lets try it out]:
-""", "python habtrack.py reference"),
+""", "habtrack reference"),
 
 (r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -281,7 +278,7 @@ during the PyCon 2017]
 [first lets make sure the demo data is clean, so we call
 the "demo_default" command]
 
-""", "python habtrack.py demo_default"),
+""", "habtrack demo_default"),
 
 (r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -290,12 +287,16 @@ the "demo_default" command]
   __) #_     | now the demo-data is created and      |
              | stored in the file                    |
              | project-root/data/sample.json         |
+             |                                       |
+             | by the way every habtrack command     |
+             | gives a response if it was done or    |
+             | not                                   |
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 
 [lets take a look at the sample data 
 (and here we go again demo, demo, demo demo demo demr dfeom . . .)
 let us just make the call and dont talk about demo related things again]
-""", "python habtrack.py --demo list_habits"),
+""", "habtrack --demo list_habits"),
 
 (r"""
 lets take one and look closer to it
@@ -306,13 +307,13 @@ Habit: vacuum_clean => the name of the habit
 2000-01-01 => the creation date of the habit (year-month-day)
 weekly => the periodicity of the habit
 amount: 3 => the amount of "check_offs" needed in order to be fullfilled
+
 (much words to say "vacuum_clean the apartment 3 times a week")
 """, False),
 
 (r"""
 [lets check if something was done lately]
-""", "python habtrack.py --demo analyse is_broken -n=pay_rent"),
-
+""", "habtrack --demo analyse is_broken -n=pay_rent"),
 (r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     \_\      | oh . . .                      |
@@ -321,7 +322,7 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
              | lets check how many rents are |
              | due                           |
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
-""", "python habtrack.py --demo analyse list_checkoffs -n=pay_rent"),
+""", "habtrack --demo analyse list_checkoffs -n=pay_rent"),
 
 (r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -332,7 +333,7 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
              |                               |
              | lets do something about it    |
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
-""", "python habtrack.py --demo mngt check_off -n=pay_rent"),
+""", "habtrack --demo mngt check_off -n=pay_rent"),
 
 (r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -346,7 +347,7 @@ amount: 3 => the amount of "check_offs" needed in order to be fullfilled
              | i always wanted to take piano |
              | lessons so lets create a habit|
              |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
-""", 'python habtrack.py mngt create -n=piano_lessons -p=weekly -d="i want to be elton john" -a=76'),
+""", 'habtrack mngt create -n=piano_lessons -p=weekly -d="i want to be elton john" -a=14'),
 
 (r"""
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -372,9 +373,9 @@ reference=r"""
         - [demo_default] - restores the default sample habits for the "demo mode" (resets the demo mode)
         - [reference] - shows a summarization of the tool
         - [man] - this screen
-    e.g. 1 : python habtrack.py mngt create -n="make Tea" -p="daily"
-    e.g. 2 : python habtrack.py analyse get_streaks -n="make Tea"
-    e.g. 3 : python habtrack.py man
+    e.g. 1 : habtrack mngt create -n="make Tea" -p="daily"
+    e.g. 2 : habtrack analyse get_streaks -n="make Tea"
+    e.g. 3 : habtrack man
 
 - [subcommand]:
     - access to the functionality of the commands
@@ -407,5 +408,5 @@ reference=r"""
             - [weekly] => every week
             - [monthly] => every montj
         - [-d(escription)] => a brief description of the habit
-        - [a(mount)] => the amount a habit has to be done within its "period" to represent one time, twice, and so on
+        - [-a(mount)] => the amount a habit has to be done within its "period" to represent one time, twice, and so on
 """
