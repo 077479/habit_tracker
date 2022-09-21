@@ -12,6 +12,7 @@
 - **create a virtual environment**:
     - ``python -m venv env_habit_tracker``
     - ``cd env_habit_tracker``
+- **activate the virtual environment**:
     - **Windows**:
         - ``.\Scripts\activate``
     - **Linux**:
@@ -33,6 +34,10 @@
 
 # Usage
 - after installation it is aviable as the command "*habtrack*" as long the virtual env is activated
+- every command/subcommand has a help option: ``habtrack [command] [subcommand] help``
+- a reference can be accessed with: ``habtrack reference``
+- a semi interactive exploration of the tool is started with: ``habtrack man``
+## general Usage
 - ``habtrack [command] [subcommand] [options]``
 ## [command]: 
 - With Subcommands:
@@ -43,7 +48,7 @@
     - **[list_habits]** - convinience call to list all stored habits
     - **[demo_default]** - restores the default sample habits for the "demo mode" (resets the demo mode)
     - **[reference]** - shows a summarization of the tool
-    - **[man]** - this screen
+    - **[man]** - semi interactive exploration of the tool
 - e.g. 1 : ``habtrack mngt create -n="make Tea" -p="daily"``
 - e.g. 2 : ``habtrack analyse get_streaks -n="make Tea"``
 - e.g. 3 : ``habtrack man``
